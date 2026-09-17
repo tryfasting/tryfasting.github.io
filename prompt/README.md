@@ -10,7 +10,8 @@
 | 02 | [`v1.1_detail-fix-prompt.md`](./v1.1_detail-fix-prompt.md) | **v1.1** | `e598185` (`tag: v1.1`) | 프로필 사진 추가(64~80px), `h1` 크기 조율(`clamp(2.25rem, 4.5vw, 3.25rem)`), 오렌지 액센트 바 정제(48px 마커화) | 완료 |
 | 03 | [`v1.2_execute-with-policy.md`](./v1.2_execute-with-policy.md) | **v1.2** | `138cf21` (`tag: v1.2`) | `policy/design-tokens.md` 채택(SSOT), 원본 레퍼런스(`swissfolio-reference`) 클론, `h1` 스케일 대비 복원(`clamp(2.75rem, 5.5vw, 4rem)`) | 완료 |
 | 04 | [`v1.3_specificity-fix-prompt-en.md`](./v1.3_specificity-fix-prompt-en.md) | **v1.3** | `ac8d958` (`tag: v1.3`) | CSS Specificity 전수 점검, `<p>` 태그 인라인 Tailwind 유틸리티 제거, 디자인 토큰 4번 규칙(특이도 충돌 방지) 추가 | 완료 |
-| 05 | [`v1.4_multi-variant-exploration-prompt-en.md`](./v1.4_multi-variant-exploration-prompt-en.md) | **v1.4 (예정)** | *Pending* (Base: `v1.3`) | 원본 레퍼런스 실측치(`reference-diff.md`) 기반 3개 변량(Variant A, B, C) 병렬 브랜치 실험 탐색 지시서 | 대기 |
+| 05 | [`v1.4_multi-variant-exploration-prompt-en.md`](./v1.4_multi-variant-exploration-prompt-en.md) | **v1.4** | `4b91f20` (exp 브랜치 3개) | 원본 레퍼런스 실측치(`reference-diff.md`) 기반 3개 변량(Variant A, B, C) 병렬 브랜치 실험 탐색 | 완료 |
+| 06 | [`v1.5_variant-c-refinement-prompt-en.md`](./v1.5_variant-c-refinement-prompt-en.md) | **v1.5 (예정)** | *Pending* (Base: `variant-c`) | variant-c 기반 3대 이슈 정제(c1: 사진 크기/배치, c2: 오렌지 액센트 강화, c3: 프로젝트 그리드 리듬감) 탐색 지시서 | 진행 중 |
 
 ## 네이밍 및 아카이빙 규칙
 1. **파일명 전단 접두어**: `v{major}.{minor}_` 형식으로 버전명을 파일명 맨 앞에 명시하여 파일 탐색기나 에디터 트리에서 시간 순서대로 정렬되도록 합니다.
