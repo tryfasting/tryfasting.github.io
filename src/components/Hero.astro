@@ -4,13 +4,20 @@ const contacts = ['Email', 'GitHub', 'LinkedIn'];
 ---
 
 <section class="section-rule hero-spacing" aria-labelledby="profile-title">
-  <p class="section-label mb-6">Portfolio <span class="edition-mark">/</span> AI &amp; LLM</p>
-
-  <div>
-    <h1 id="profile-title">[이름]</h1>
-    <p class="text-xl md:text-2xl font-medium tracking-tight text-ink-soft mt-3">
-      AI / LLM Engineer
-    </p>
+  <!-- 상단 프로필 사진 & 타이틀 영역 -->
+  <div class="flex items-start gap-4 md:gap-5 mb-2">
+    <img
+      src="/profile.jpg"
+      alt="[이름] 프로필 사진"
+      class="w-16 h-16 md:w-20 md:h-20 object-cover rounded-sm border border-[var(--color-border)] shadow-xs shrink-0"
+    />
+    <div>
+      <p class="section-label mb-1">PORTFOLIO <span class="edition-mark">/</span> AI &amp; LLM</p>
+      <h1 id="profile-title">[이름]</h1>
+      <p class="text-base md:text-lg font-medium tracking-tight text-ink-soft mt-1">
+        AI / LLM Engineer
+      </p>
+    </div>
   </div>
 
   <!-- 메타데이터 줄: 상하 1px border, 좌측 키워드 태그, 우측 링크 (0.8rem) -->
@@ -30,9 +37,6 @@ const contacts = ['Email', 'GitHub', 'LinkedIn'];
       {contacts.map((label) => <a class="accent-link" role="link" aria-disabled="true">{label}</a>)}
     </div>
   </div>
-
-  <!-- 액센트 바 (중간 높이 40px, 은은한 오렌지 면 분할) -->
-  <div class="accent-bar accent-bar-md mb-10" aria-hidden="true"></div>
 
   <!-- 소개 문단: 리듬감 있는 줄 단위 분할 -->
   <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
