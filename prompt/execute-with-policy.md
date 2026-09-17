@@ -1,0 +1,28 @@
+# 지시사항 (LLM 코딩 에이전트용)
+
+`policy/design-tokens.md`, `prompts/reference-clone-prompt.md`, `prompts/restore-scale-prompt.md` 세 파일이 이미 프로젝트 폴더에 준비되어 있다. 아래 순서로 정확히 실행하라.
+
+## 0. 운영 원칙 (이번부터 항상 적용)
+
+- `policy/design-tokens.md`는 이 프로젝트의 디자인 값(폰트 크기, 간격, 색상)에 대한 단일 진실 공급원이다. 앞으로 어떤 지시를 받든 이 문서에 명시된 값과 실제 코드가 다르면 이 문서를 기준으로 코드를 맞춰라.
+- 특정 요소만 수정하라는 지시를 받으면 그 요소만 바꾸고, 문서에 있는 다른 값(특히 h1, .index-number 크기)은 절대 함께 건드리지 마라.
+- 코드에서 값을 하나라도 바꿀 때마다, 작업이 끝난 직후 `policy/design-tokens.md`의 표를 실제 최종값으로 갱신하고 "변경 이력" 섹션에 날짜 없이 버전 태그(예: v1.2)와 한 줄 요약을 추가하라. 이 갱신을 빠뜻하지 마라 — 이후 세션에서 드리프트를 막는 유일한 근거다.
+
+## 1. 참조용 원본 클론 설정
+
+`prompts/reference-clone-prompt.md`의 지시사항을 실행하라. 요약: 프로젝트 폴더 옆에 `../swissfolio-reference`로 Swissfolio 원본을 clone하고, 앞으로 스케일/간격 조정 시 감으로 추측하지 말고 이 참조 폴더의 실제 코드 값을 먼저 확인한 뒤 결정하는 절차를 지금부터 고정하라.
+
+## 2. 스케일 대비 복원
+
+`prompts/restore-scale-prompt.md`의 지시사항을 실행하라. 요약: h1(이름)을 `policy/design-tokens.md`에 명시된 절충값(`clamp(2.75rem, 5.5vw, 4rem)`)으로 복원하고, `.index-number`도 같은 문서의 값과 일치하는지 확인해 맞춰라. `policy/design-tokens.md`를 이 프로젝트의 공식 정책 문서로 채택하는 것도 이 단계에 포함된다.
+
+## 3. 완료 후 처리
+
+1. `prompts/reference-clone-prompt.md`, `prompts/restore-scale-prompt.md`는 실행이 끝나면 삭제해도 된다. 단, 1번과 2번 작업의 결과가 `policy/design-tokens.md`의 변경 이력에 이미 기록되어 있는지 삭제 전에 반드시 재확인하라.
+2. `policy/design-tokens.md`는 절대 삭제하지 마라.
+
+## 4. 검증 및 보고
+
+1. 데스크톱(1440px)과 모바일(375px) 스크린샷을 비교해, v1.0의 스케일 대비 느낌이 v1.1의 정리된 사진/바 상태를 유지하면서 복원되었는지 확인하라.
+2. `npm run build`가 에러 없이 성공하는지 확인하라.
+3. `policy/design-tokens.md`의 변경 이력에 새로 추가된 항목을 그대로 인용해서 보고하라.

@@ -53,20 +53,20 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+  font-size: clamp(2.75rem, 5.5vw, 4rem);
   font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.025em;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
 }
 
 h2 {
   font-size: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
-/* 본문/문단: 1.125rem 기본 폰트 크기 및 넉넉한 행간 */
+/* 본문/문단: 1.0625rem 기본 폰트 크기 및 넉넉한 행간 */
 p {
-  font-size: 1.125rem;
-  line-height: 1.65;
+  font-size: 1.0625rem;
+  line-height: 1.6;
   color: var(--color-ink-soft);
 }
 
@@ -139,9 +139,10 @@ main > section.section-rule::before {
 .index-number {
   font-family: var(--font-mono);
   font-weight: 600;
-  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
   color: var(--color-ink);
   opacity: 0.9;
+  line-height: 1;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
@@ -149,7 +150,9 @@ main > section.section-rule::before {
 /* 섹션 라벨(예: Main Projects) */
 .section-label {
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-ink-soft);
