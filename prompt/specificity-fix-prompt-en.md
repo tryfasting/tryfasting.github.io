@@ -1,0 +1,35 @@
+# Instructions (for LLM coding agent) - Diagnose and fix why h1 size change had no visual effect
+
+Between v1.1 and v1.2, the `h1` font-size rule in `global.css` was changed to `clamp(2.75rem, 5.5vw, 4rem)`, but the rendered name size on screen did not visibly change at all. This is very likely a CSS specificity issue. Diagnose and fix it in the following order.
+
+## 1. Diagnose the root cause
+
+1. Open `src/components/Hero.astro` and find the `<h1>` tag that renders the name (`[이름]`).
+2. Check whether that tag has a Tailwind font-size utility class attached directly (e.g. `text-2xl`, `text-3xl`, `text-4xl`, `text-5xl`).
+3. If such a class is present, it has higher CSS specificity (class selector, 0,0,1,0) than the `h1 { ... }` rule in `global.css` (element selector, 0,0,0,1), so the Tailwind class always wins and our updated value is being silently ignored. This is the most likely root cause of v1.1 and v1.2 looking identical.
+4. Verify this directly in browser devtools: select the name element, check the Computed tab, and confirm whether the actual applied `font-size` matches the value specified in `policy/design-tokens.md` (~4rem depending on viewport) or a different value coming from a Tailwind class. Report the exact finding.
+
+## 2. Fix it
+
+Choose one of the two approaches below and apply it consistently, since this same pattern must also be applied to other components going forward.
+
+**Option A (recommended): Remove the Tailwind size class and rely on the CSS class only**
+- Remove any font-size-related Tailwind classes (`text-*`) from the `<h1>` tag in `Hero.astro`. Keep unrelated classes (e.g. `font-bold`, `mb-*`) if they don't control size.
+- Let the `h1 { ... }` rule in `global.css` take effect as-is.
+
+**Option B: Make the Tailwind class match the policy value exactly**
+- Keep the Tailwind class but replace it with an arbitrary-value class that matches `policy/design-tokens.md` exactly, e.g. `text-[clamp(2.75rem,5.5vw,4rem)]`.
+- In this case, delete or reduce the `h1 { ... }` rule in `global.css` to a fallback only, to avoid duplicate/conflicting definitions.
+
+## 3. Audit the rest of the project
+
+Check whether the same problem (Tailwind classes overriding global.css rules) exists on `.index-number` in `Experience.astro` / `ProjectsSection.astro`, and on `.section-label`. For each, verify that the actual Computed font-size matches the value in the `policy/design-tokens.md` table.
+
+## 4. Add a prevention rule to the policy document
+
+Append the following item to the end of the "Usage rules" section in `policy/design-tokens.md`:
+> Font size, letter-spacing, and line-height values must be controlled only through named classes in global.css (e.g. `.index-number`, `.section-label`) or element selectors (h1, p) — never through Tailwind size utility classes applied directly on components. Violating this causes a specificity bug where policy values get silently overridden, as happened between v1.1 and v1.2.
+
+## 5. Verify
+
+After the fix, compare desktop-viewport screenshots to confirm the name is now visibly larger than before. Capture the devtools Computed tab showing the font-size value matches `policy/design-tokens.md`, and include it in your report.

@@ -50,6 +50,7 @@
 - v1.0: 초기 스케일 대비 확보 (h1 6.5rem까지 확대) — 시원함은 있었으나 "과함" 피드백
 - v1.1: 사진/바 조정 과정에서 h1을 3.25rem까지 과도하게 축소 — 스케일 대비 상실, 되돌림 필요
 - v1.2: h1 4rem 절충 적용 (`clamp(2.75rem, 5.5vw, 4rem)`), `.index-number`(`clamp(2rem, 3.5vw, 2.75rem)`), 본문 `p`(`1.0625rem`) 및 `.section-label`(`0.8rem`) 토큰 일치화
+- v1.3: 타이포그래피 specificity 전수 감사 및 본문 p 태그 유틸리티 제거, CSS 특이도 충돌 방지 규칙 추가
 
 ## 사용 규칙
 
@@ -57,3 +58,5 @@
 1. 이 문서의 표에 있는 값부터 코드에 실제로 반영되어 있는지 먼저 확인하라.
 2. 사용자가 특정 요소만 콕 집어 수정을 요청하면, 그 요소만 바꾸고 표의 다른 값들은 절대 함께 바꾸지 마라 (v1.1에서 발생한 실수 = 사진 추가 지시를 처리하다 h1 크기까지 같이 건드림).
 3. 수정이 끝나면 이 문서의 표 값을 실제 반영된 최종값으로 갱신하고, 변경 이력에 한 줄을 추가하라.
+4. Font size, letter-spacing, and line-height values must be controlled only through named classes in global.css (e.g. `.index-number`, `.section-label`) or element selectors (h1, p) — never through Tailwind size utility classes applied directly on components. Violating this causes a specificity bug where policy values get silently overridden, as happened between v1.1 and v1.2.
+
