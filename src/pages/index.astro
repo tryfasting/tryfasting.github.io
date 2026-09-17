@@ -1,0 +1,32 @@
+---
+import 'pretendard/dist/web/variable/pretendardvariable.css';
+import '../styles/global.css';
+import Wrapper from '../components/Wrapper.astro';
+import Hero from '../components/Hero.astro';
+import Experience from '../components/Experience.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="AI/LLM 포트폴리오 디자인 검수용 샘플" />
+    <title>[이름] — AI/LLM Portfolio</title>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">본문으로 건너뛰기</a>
+    <Wrapper class="portfolio-shell">
+      <main id="main">
+        <Hero />
+        <Experience />
+        <ProjectsSection />
+      </main>
+      <footer class="section-rule py-6 flex flex-wrap justify-between gap-3 text-xs text-ink-soft">
+        <span>[이름] · Portfolio</span>
+        <span>Swissfolio / Lexington Themes</span>
+      </footer>
+    </Wrapper>
+  </body>
+</html>

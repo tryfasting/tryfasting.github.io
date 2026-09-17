@@ -1,0 +1,64 @@
+---
+// src/components/ProjectsSection.astro
+// Swissfolio 원본의 "Main Projects" 섹션을 대체합니다.
+// 스케일 대비와 액센트 바를 적용해 시각적 밀도를 강화했습니다.
+
+const projects = [
+  {
+    index: "01.",
+    title: "[프로젝트명 1]",
+    tag: "[분야 / 기술]",
+    description:
+      "[프로젝트의 문제와 접근 방식을 간결하게 작성합니다. 결과와 기여 내용은 추후 입력합니다.]",
+  },
+  {
+    index: "02.",
+    title: "[프로젝트명 2]",
+    tag: "[분야 / 기술]",
+    description:
+      "[프로젝트의 문제와 접근 방식을 간결하게 작성합니다. 결과와 기여 내용은 추후 입력합니다.]",
+  },
+  {
+    index: "03.",
+    title: "[프로젝트명 3]",
+    tag: "[분야 / 기술]",
+    description:
+      "[프로젝트의 문제와 접근 방식을 간결하게 작성합니다. 결과와 기여 내용은 추후 입력합니다.]",
+  },
+  {
+    index: "04.",
+    title: "[프로젝트명 4]",
+    tag: "[분야 / 기술]",
+    description:
+      "[프로젝트의 문제와 접근 방식을 간결하게 작성합니다. 결과와 기여 내용은 추후 입력합니다.]",
+  },
+];
+---
+
+<section class="section-rule" aria-labelledby="projects-title">
+  <h2 id="projects-title" class="section-label mb-8">
+    Main <span class="font-semibold text-[var(--color-ink)]">Projects</span>
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 grid-loose">
+    {
+      projects.map((p) => (
+        <article class="stack">
+          <div class="flex items-baseline justify-between gap-4">
+            <span class="index-number">{p.index}</span>
+            <span class="period-label">{p.tag}</span>
+          </div>
+          <div class="accent-bar accent-bar-sm" aria-hidden="true"></div>
+          <div>
+            <h3 class="text-xl font-bold tracking-tight text-[var(--color-ink)]">
+              {p.title}
+            </h3>
+          </div>
+          <p class="measure text-[var(--color-ink-soft)] leading-relaxed">
+            {p.description}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</section>

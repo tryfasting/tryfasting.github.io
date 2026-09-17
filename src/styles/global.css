@@ -1,0 +1,218 @@
+/*
+  Swissfolio 커스텀 테마 - 한화금융 지원용
+  다크모드는 의도적으로 제공하지 않습니다 (이력서는 항상 라이트 모드).
+*/
+
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
+
+@theme {
+  /* 배경 & 텍스트: 종이 질감의 오프화이트 + 잉크블랙 */
+  --color-paper: #F7F5F1;
+  --color-paper-muted: #EFEDE7;
+  --color-ink: #16140F;
+  --color-ink-soft: #4A473F;
+  --color-border: #D8D4C9;
+
+  /* 포인트 컬러: 전체 화면의 3% 이내로만 사용할 것 */
+  --color-accent: #F37321;        /* Hanwha Orange 100%, RGB 243 / 115 / 33 */
+  --color-accent-secondary: #1F4FD1; /* 코발트블루 */
+
+  --font-sans: "Pretendard Variable", "Pretendard", -apple-system, sans-serif;
+  --font-mono: "Pretendard Variable", "Pretendard", monospace;
+
+  /* 수직 리듬 스케일: 섹션/블록 간 간격을 여기서만 관리 */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+  --space-2xl: 96px;
+  --space-3xl: 128px;
+
+  /* 가독폭 */
+  --measure: 62ch;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* ---------- 2. 헤드라인 타이포그래피 기본값 ---------- */
+h1, h2, h3 {
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+/* 본문/문단: 1.125rem 기본 폰트 크기 및 넉넉한 행간 */
+p {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--color-ink-soft);
+}
+
+/* 가독폭 제한: 문단에만 적용, 헤드라인/구분선은 전체 폭 유지 */
+.measure {
+  max-width: var(--measure);
+}
+
+/* ---------- 3. 수직 리듬 유틸리티 ---------- */
+/* 섹션 내부 콘텐츠를 자식 요소 순서대로 일관된 간격으로 쌓을 때 사용 */
+.stack > * + * {
+  margin-top: var(--space-md);
+}
+
+.stack-lg > * + * {
+  margin-top: var(--space-xl);
+}
+
+/* 섹션 상단 구분선 및 자체 상하 여백 */
+.section-rule {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+}
+
+@media (max-width: 767px) {
+  .section-rule {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+  }
+}
+
+/* 히어로 섹션처럼 첫 화면은 더 넉넉하게 */
+.hero-spacing {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-2xl);
+}
+
+/* 그리드 카드(프로젝트 등) 사이 간격: 기존 gap-x-12 gap-y-12를 이 값으로 통일 */
+.grid-loose {
+  gap: var(--space-xl);
+}
+
+/* ---------- 액센트 바 (Accent Bar) ---------- */
+.accent-bar {
+  width: 100%;
+  border-radius: 2px;
+  background-color: var(--color-accent);
+}
+
+.accent-bar-sm { height: 12px; opacity: 0.08; }
+.accent-bar-md { height: 40px; opacity: 0.1; }
+.accent-bar-lg { height: 96px; opacity: 0.12; }
+
+main > section.section-rule {
+  position: relative;
+}
+
+main > section.section-rule::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 48px;
+  height: 3px;
+  background-color: var(--color-accent);
+}
+
+/* 인덱스 라벨(01. 02. 03. ...): 존재감을 회복하되 절제된 굵기와 정렬 유지 */
+.index-number {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  color: var(--color-ink);
+  opacity: 0.9;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 섹션 라벨(예: Main Projects) */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-soft);
+}
+
+/* 포인트 컬러 사용처: 링크, 활성 네비, 포커스 링, 섹션당 강조 1곳 */
+a.accent-link {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+}
+a.accent-link:hover {
+  text-decoration-thickness: 2.5px;
+}
+
+.nav-active-dot {
+  background-color: var(--color-accent);
+}
+
+.badge-secondary {
+  color: var(--color-accent-secondary);
+  border: 1px solid var(--color-accent-secondary);
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+/* 키보드 포커스: 밝은 바탕에서 식별하기 쉬운 코발트 */
+:focus-visible {
+  outline: 2px solid var(--color-accent-secondary);
+  outline-offset: 2px;
+}
+
+.portfolio-shell {
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 64px 48px 0;
+}
+
+.period-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.edition-mark { color: var(--color-accent); }
+
+a[aria-disabled="true"] { cursor: default; }
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -80px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  padding: 8px 16px;
+}
+.skip-link:focus { top: 8px; }
+
+@media (max-width: 767px) {
+  .portfolio-shell { padding: 28px 24px 0; }
+}

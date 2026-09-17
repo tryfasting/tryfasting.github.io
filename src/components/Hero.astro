@@ -1,0 +1,67 @@
+---
+// Contact destinations are intentionally unset until real content is supplied.
+const contacts = ['Email', 'GitHub', 'LinkedIn'];
+---
+
+<section class="section-rule hero-spacing" aria-labelledby="profile-title">
+  <p class="section-label mb-6">Portfolio <span class="edition-mark">/</span> AI &amp; LLM</p>
+
+  <div>
+    <h1 id="profile-title">[이름]</h1>
+    <p class="text-xl md:text-2xl font-medium tracking-tight text-ink-soft mt-3">
+      AI / LLM Engineer
+    </p>
+  </div>
+
+  <!-- 메타데이터 줄: 상하 1px border, 좌측 키워드 태그, 우측 링크 (0.8rem) -->
+  <div class="border-y border-[var(--color-border)] py-3 my-8 flex flex-wrap items-center justify-between gap-4 text-[0.8rem] text-ink-soft">
+    <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+      <span class="font-semibold text-ink">LLM Agent</span>
+      <span>·</span>
+      <span>RAG Architecture</span>
+      <span>·</span>
+      <span class="font-semibold text-ink">Model Fine-Tuning</span>
+      <span>·</span>
+      <span>Hanwha Target</span>
+      <span>·</span>
+      <span>Seoul, KR</span>
+    </div>
+    <div class="flex items-center gap-4">
+      {contacts.map((label) => <a class="accent-link" role="link" aria-disabled="true">{label}</a>)}
+    </div>
+  </div>
+
+  <!-- 액센트 바 (중간 높이 40px, 은은한 오렌지 면 분할) -->
+  <div class="accent-bar accent-bar-md mb-10" aria-hidden="true"></div>
+
+  <!-- 소개 문단: 리듬감 있는 줄 단위 분할 -->
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+    <div class="md:col-span-4">
+      <p class="section-label">Overview</p>
+    </div>
+    <div class="md:col-span-8">
+      <p class="measure text-[1.125rem] leading-relaxed text-ink">
+        데이터와 비즈니스 사이의 간극을 LLM 기반 지능형 시스템으로 연결합니다.<br />
+        복잡한 금융 워크플로우를 자동화하는 멀티 에이전트 파이프라인을 설계하며,<br />
+        엄격한 정합성과 신뢰성을 보장하는 실용적인 AI 프로덕트를 만듭니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- 하단 2단 컬럼: 연락/지원 상태(밑줄) & 개발 철학(밑줄 없음) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 pt-8 border-t border-[var(--color-border)]">
+    <div>
+      <p class="section-label mb-3">Status &amp; Availability</p>
+      <p class="text-[1.125rem] leading-relaxed text-ink underline decoration-[var(--color-accent)] underline-offset-4 decoration-1">
+        현재 한화금융 및 엔터프라이즈 AI 신입/주니어 포지션에 적극적으로 지원하고 있습니다. 협업 및 인터뷰 문의는 언제든 환영합니다.
+      </p>
+    </div>
+    <div>
+      <p class="section-label mb-3">Core Principles</p>
+      <p class="text-[1.125rem] leading-relaxed text-ink-soft">
+        단순한 모델 호출에 그치지 않고 비용 효율성, 데이터 정합성, 운영 관측성을 우선시합니다.
+        문제를 끝까지 분석하고 구조화된 해결책을 코드로 정제하는 협업을 추구합니다.
+      </p>
+    </div>
+  </div>
+</section>

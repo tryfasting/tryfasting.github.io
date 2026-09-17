@@ -1,0 +1,29 @@
+---
+const entries = [
+  { index: '01.', period: '[시작 — 종료]', name: '[기관명 / 교육명]', role: '[역할 / 과정명]', description: '[담당 업무 또는 학습 내용을 한 줄로 작성합니다.]' },
+  { index: '02.', period: '[시작 — 종료]', name: '[기관명 / 교육명]', role: '[역할 / 과정명]', description: '[경험과 배운 점을 간결하게 작성합니다.]' },
+];
+---
+<section class="section-rule" aria-labelledby="experience-title">
+  <h2 id="experience-title" class="section-label mb-8">Experience <span class="font-semibold text-ink">&amp; Education</span></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 grid-loose">
+    {entries.map((entry) => (
+      <article class="stack">
+        <div class="flex items-baseline justify-between gap-4">
+          <span class="index-number">{entry.index}</span>
+          <span class="period-label">{entry.period}</span>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold tracking-tight">{entry.name}</h3>
+          <p class="mt-1 text-sm text-ink-soft">{entry.role}</p>
+        </div>
+        <p class="measure leading-7 text-ink-soft">{entry.description}</p>
+      </article>
+    ))}
+  </div>
+  <div class="mt-9 flex flex-wrap items-center gap-3">
+    <p class="section-label">Skills</p>
+    <span class="badge-secondary">[주요 기술]</span>
+    <span class="text-sm text-ink-soft">[기술 1] · [기술 2] · [기술 3]</span>
+  </div>
+</section>
