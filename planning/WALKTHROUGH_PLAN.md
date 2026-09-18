@@ -27,13 +27,12 @@ graph TD
 
 ---
 
-### [x] Phase 2. 브랜치 전략 확립 & master 삭제 (완료)
-*목표: 작업 브랜치(`main`)와 배포 브랜치(`deploy`)의 역할을 분리하고, 불필요한 `master`를 정리하여 배포 보호 규칙 에러 원천 차단*
-1. [x] **전용 배포 브랜치(`deploy`) 생성 및 푸시**: 원격 `origin/deploy` 생성 완료.
-2. [x] **워크플로우 배포 트리거 설정**: `deploy.yml` 최신 Node 24 지원 및 브랜치 연동 완료.
-3. [x] **GitHub 저장소 Default Branch 변경**: GitHub Settings에서 `main`으로 전환 완료.
-4. [x] **GitHub Pages 환경 보호 규칙(Environment Protection Rules) 갱신**: `github-pages` 환경에서 `deploy` 및 `main` 브랜치 배포 권한 승인 완료.
-5. [x] **원격 `master` 브랜치 완전 삭제**: `git push origin --delete master` 완료 (원격 저장소 완전 정리).
+### [x] Phase 2. 업계 표준 브랜치 전략 확립 & master/deploy 정리 (완료)
+*목표: 업계 표준 구조(`dev` = 개발 작업, `main` = 라이브 배포) 확립 및 불필요한 브랜치 완전 제거*
+1. [x] **공식 라이브 배포 브랜치(`main`) 트리거 확립**: `deploy.yml` 배포 대상을 `main`으로 설정.
+2. [x] **개발 전용 브랜치(`dev`) 생성 및 원격 푸시**: 모든 평소 개발 커밋 및 작업은 `dev`에서 진행(배포 액션 미실행).
+3. [x] **GitHub 저장소 Default Branch 및 Pages 환경 보호 규칙 갱신**: `main` 배포 권한 승인.
+4. [x] **불필요 브랜치(`master`, `deploy`) 원격/로컬 완전 영구 삭제**: 저장소 완벽 정리 완료.
 
 ---
 
@@ -79,6 +78,6 @@ graph TD
 *목표: 2차 심사위원이 열람했을 때 완벽한 사용자 경험 보장*
 1. [ ] **SEO & OpenGraph 메타태그 설정**:
    - 카카오톡/슬랙/링크드인에 공유했을 때 뜨는 미리보기 카드(제목, 썸네일, 설명) 완비.
-2. [ ] **`deploy` 브랜치 최종 병합 및 배포**:
-   - `main`에서 검증된 최종 코드를 `deploy` 브랜치로 푸시하여 GitHub Pages 무중단 자동 릴리스.
+2. [ ] **`main` 브랜치 최종 병합 및 배포**:
+   - `dev`에서 검증된 최종 코드를 `main` 브랜치로 병합(푸시)하여 GitHub Pages 무중단 자동 릴리스.
 3. [ ] **최종 라이브 사이트 검수**: `https://tryfasting.github.io`에서 모든 링크, 이미지, 텍스트 동작 검증.
