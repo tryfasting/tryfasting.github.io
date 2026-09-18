@@ -27,17 +27,13 @@ graph TD
 
 ---
 
-### [ ] Phase 2. 브랜치 전략 확립 & master 삭제 (현재 진행 중)
+### [x] Phase 2. 브랜치 전략 확립 & master 삭제 (완료)
 *목표: 작업 브랜치(`main`)와 배포 브랜치(`deploy`)의 역할을 분리하고, 불필요한 `master`를 정리하여 배포 보호 규칙 에러 원천 차단*
 1. [x] **전용 배포 브랜치(`deploy`) 생성 및 푸시**: 원격 `origin/deploy` 생성 완료.
 2. [x] **워크플로우 배포 트리거 설정**: `deploy.yml` 최신 Node 24 지원 및 브랜치 연동 완료.
-3. [ ] **GitHub 저장소 Default Branch 변경** *(사용자 웹 설정 1회 필요)*:
-   - GitHub 정책상 현재 Default Branch인 `master`는 CLI/터미널에서 직접 삭제가 거부됨(`refusing to delete the current branch: refs/heads/master`).
-   - GitHub Settings에서 Default Branch를 `main`으로 전환.
-4. [ ] **GitHub Pages 환경 보호 규칙(Environment Protection Rules) 갱신**:
-   - `github-pages` 환경에서 `deploy` 및 `main` 브랜치의 배포 권한 승인.
-5. [ ] **원격 `master` 브랜치 완전 삭제**:
-   - `git push origin --delete master` 실행하여 깔끔하게 정리.
+3. [x] **GitHub 저장소 Default Branch 변경**: GitHub Settings에서 `main`으로 전환 완료.
+4. [x] **GitHub Pages 환경 보호 규칙(Environment Protection Rules) 갱신**: `github-pages` 환경에서 `deploy` 및 `main` 브랜치 배포 권한 승인 완료.
+5. [x] **원격 `master` 브랜치 완전 삭제**: `git push origin --delete master` 완료 (원격 저장소 완전 정리).
 
 ---
 
