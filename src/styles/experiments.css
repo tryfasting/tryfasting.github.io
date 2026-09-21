@@ -1,0 +1,96 @@
+/* v1.6 dev-only variants. Every rule is scoped; see policy/design-tokens.md. */
+body[data-variant] {
+  --variant-width: 1120px;
+  --variant-section: 88px;
+  --variant-name: clamp(2.75rem, 5.4vw, 4.5rem);
+  --variant-title: clamp(1.375rem, 2.3vw, 1.875rem);
+}
+body[data-variant] .portfolio-shell { max-width: var(--variant-width); padding-top: 48px; }
+body[data-variant] .section-rule { padding-block: var(--variant-section); }
+body[data-variant] .hero-section { padding-top: 56px; }
+body[data-variant] h1 { font-size: var(--variant-name); line-height: 1.04; letter-spacing: -0.045em; }
+body[data-variant] p { font-size: 1rem; line-height: 1.8; word-break: keep-all; overflow-wrap: anywhere; }
+body[data-variant] .section-label { font-size: 0.75rem; line-height: 1.4; letter-spacing: 0.1em; }
+body[data-variant] .period-label { font-size: 0.75rem; line-height: 1.4; }
+body[data-variant] h3 { font-size: var(--variant-title); line-height: 1.25; letter-spacing: -0.035em; }
+body[data-variant] .index-number { font-size: 1rem; font-weight: 500; line-height: 1; letter-spacing: 0; }
+body[data-variant] .profile-heading { gap: 24px; align-items: flex-start; }
+body[data-variant] .profile-heading img { width: 44px; height: 44px; box-shadow: none; }
+body[data-variant] .profile-heading .section-label { margin-bottom: 16px; }
+body[data-variant] .profile-heading h1 + p { margin-top: 12px; font-size: 1rem; letter-spacing: 0; }
+body[data-variant] .profile-meta { margin-block: 40px; padding-block: 16px; gap: 16px 24px; font-size: 0.75rem; }
+body[data-variant] .profile-overview { gap: 32px; margin-bottom: 48px; }
+body[data-variant] .profile-overview .measure { max-width: 58ch; }
+body[data-variant] .profile-overview br { display: none; }
+body[data-variant] .profile-principles { column-gap: 48px; padding-top: 28px; }
+body[data-variant] .profile-principles p:not(.section-label) { text-decoration: none; }
+body[data-variant] .profile-principles .section-label { border-left: 3px solid var(--color-accent); padding-left: 12px; }
+body[data-variant] .stack > * + * { margin-top: 16px; }
+body[data-variant] article .accent-bar { display: none; }
+body[data-variant] .grid-loose { gap: 48px; }
+body[data-variant] article { border-top: 1px solid var(--color-border); padding-top: 20px; min-width: 0; }
+body[data-variant] footer.section-rule { padding-block: 28px; }
+body[data-variant] .badge-secondary { border: 0; border-bottom: 1px solid var(--color-accent-secondary); border-radius: 0; padding-inline: 0; }
+body[data-variant] .skip-link:focus { z-index: 5; }
+
+/* D: an editorial margin aligns labels, overview and work columns. */
+body[data-variant="d-editorial"] .profile-heading { position: relative; padding-left: calc(25% + 24px); }
+body[data-variant="d-editorial"] .profile-heading img { position: absolute; left: 0; top: 0; }
+body[data-variant="d-editorial"] .profile-overview { grid-template-columns: 1fr 3fr; }
+body[data-variant="d-editorial"] .profile-overview > div { grid-column: auto; }
+body[data-variant="d-editorial"] .experience-section,
+body[data-variant="d-editorial"] .projects-section { display: grid; grid-template-columns: 1fr 3fr; gap: 32px; align-items: start; }
+body[data-variant="d-editorial"] .experience-section > :last-child { grid-column: 2; margin-top: 0; }
+body[data-variant="d-editorial"] .grid-loose { gap: 40px 32px; }
+body[data-variant="d-editorial"] .experience-section h3 { font-size: 1.25rem; }
+body[data-variant="d-editorial"] .projects-section h3 { font-size: 1.5rem; }
+
+/* E: ordered full-width entries, taking rhythm from reference Projects. */
+body[data-variant="e-ledger"] { --variant-width: 1040px; --variant-section: 72px; --variant-name: clamp(2.75rem, 5vw, 4rem); }
+body[data-variant="e-ledger"] .profile-heading { justify-content: space-between; flex-direction: row-reverse; }
+body[data-variant="e-ledger"] .profile-heading img { width: 48px; height: 48px; }
+body[data-variant="e-ledger"] .profile-overview { grid-template-columns: 1fr 3fr; }
+body[data-variant="e-ledger"] .profile-overview > div { grid-column: auto; }
+body[data-variant="e-ledger"] .grid-loose { grid-template-columns: 1fr; gap: 0; }
+body[data-variant="e-ledger"] article { display: grid; grid-template-columns: 140px 1fr 1fr; gap: 32px; padding-block: 32px; }
+body[data-variant="e-ledger"] article > * { margin: 0; }
+body[data-variant="e-ledger"] article > div:first-child { display: flex; flex-direction: column; gap: 14px; }
+body[data-variant="e-ledger"] article h3 { font-size: 1.5rem; }
+body[data-variant="e-ledger"] .index-number { padding-left: 12px; border-left: 3px solid var(--color-accent); }
+
+/* F: larger title/body contrast with aligned paired columns, no stagger. */
+body[data-variant="f-grid"] { --variant-width: 1200px; --variant-section: 112px; --variant-name: clamp(3rem, 6vw, 5.25rem); --variant-title: clamp(1.5rem, 2.5vw, 2.125rem); }
+body[data-variant="f-grid"] .profile-heading { display: block; position: relative; }
+body[data-variant="f-grid"] .profile-heading img { position: absolute; right: 0; top: 0; }
+body[data-variant="f-grid"] .profile-heading > div { padding-right: 68px; }
+body[data-variant="f-grid"] .profile-overview { grid-template-columns: 1fr 2fr; }
+body[data-variant="f-grid"] .profile-overview > div { grid-column: auto; }
+body[data-variant="f-grid"] .profile-overview p:not(.section-label) { font-size: 1.125rem; line-height: 1.8; }
+body[data-variant="f-grid"] .grid-loose { gap: 64px 72px; }
+body[data-variant="f-grid"] .index-number { font-size: 1.375rem; }
+body[data-variant="f-grid"] .projects-section article { border-top-color: var(--color-ink); padding-top: 24px; }
+body[data-variant="f-grid"] .projects-section article h3 { text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 2px; text-underline-offset: 9px; }
+
+@media (max-width: 900px) {
+  body[data-variant] .profile-principles { column-gap: 32px; }
+  body[data-variant="d-editorial"] .experience-section,
+  body[data-variant="d-editorial"] .projects-section { grid-template-columns: 1fr; }
+  body[data-variant="d-editorial"] .experience-section > :last-child { grid-column: 1; }
+  body[data-variant="e-ledger"] article { grid-template-columns: 104px 1fr 1fr; gap: 20px; }
+}
+@media (max-width: 767px) {
+  body[data-variant] { --variant-section: 56px; }
+  body[data-variant] .portfolio-shell { padding: 24px 24px 0; }
+  body[data-variant] .hero-section { padding-top: 32px; }
+  body[data-variant] .profile-heading { padding-left: 0; }
+  body[data-variant="d-editorial"] .profile-heading img { position: static; }
+  body[data-variant] .profile-overview { grid-template-columns: 1fr; gap: 20px; margin-bottom: 32px; }
+  body[data-variant] .profile-meta { margin-block: 28px; }
+  body[data-variant] .profile-principles { row-gap: 28px; }
+  body[data-variant] .grid-loose { grid-template-columns: 1fr; gap: 32px; }
+  body[data-variant="e-ledger"] article { grid-template-columns: 1fr; gap: 16px; padding-block: 24px; }
+  body[data-variant="e-ledger"] article > div:first-child { flex-direction: row; }
+  body[data-variant="e-ledger"] .grid-loose { gap: 0; }
+  body[data-variant="f-grid"] { --variant-section: 64px; }
+  body[data-variant="f-grid"] .profile-overview p:not(.section-label) { font-size: 1rem; }
+}

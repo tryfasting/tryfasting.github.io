@@ -1,0 +1,9 @@
+---
+import SitePortfolio from '../../components/SitePortfolio.astro';
+import { campaigns } from '../../data/portfolio';
+export function getStaticPaths() {
+  return Object.values(campaigns).map((campaign) => ({ params: { company: campaign.slug }, props: { campaign } }));
+}
+const { campaign } = Astro.props;
+---
+<SitePortfolio campaign={campaign} />

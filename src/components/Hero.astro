@@ -3,9 +3,9 @@
 const contacts = ['Email', 'GitHub', 'LinkedIn'];
 ---
 
-<section class="section-rule hero-spacing" aria-labelledby="profile-title">
+<section class="section-rule hero-spacing hero-section" aria-labelledby="profile-title">
   <!-- 상단 프로필 사진 & 타이틀 영역 -->
-  <div class="flex items-start gap-4 md:gap-5 mb-2">
+  <div class="profile-heading flex items-start gap-4 md:gap-5 mb-2">
     <img
       src="/profile.jpg"
       alt="[이름] 프로필 사진"
@@ -21,7 +21,7 @@ const contacts = ['Email', 'GitHub', 'LinkedIn'];
   </div>
 
   <!-- 메타데이터 줄: 상하 1px border, 좌측 키워드 태그, 우측 링크 (0.8rem) -->
-  <div class="border-y border-[var(--color-border)] py-3 my-8 flex flex-wrap items-center justify-between gap-4 text-[0.8rem] text-ink-soft">
+  <div class="profile-meta border-y border-[var(--color-border)] py-3 my-8 flex flex-wrap items-center justify-between gap-4 text-[0.8rem] text-ink-soft">
     <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
       <span class="font-semibold text-ink">LLM Agent</span>
       <span>·</span>
@@ -39,21 +39,21 @@ const contacts = ['Email', 'GitHub', 'LinkedIn'];
   </div>
 
   <!-- 소개 문단: 리듬감 있는 줄 단위 분할 -->
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+  <div class="profile-overview grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
     <div class="md:col-span-4">
       <p class="section-label">Overview</p>
     </div>
     <div class="md:col-span-8">
       <p class="measure text-ink">
-        데이터와 비즈니스 사이의 간극을 LLM 기반 지능형 시스템으로 연결합니다.<br />
-        복잡한 금융 워크플로우를 자동화하는 멀티 에이전트 파이프라인을 설계하며,<br />
+        데이터와 비즈니스 사이의 간극을 LLM 기반 지능형 시스템으로 연결합니다.<br />{' '}
+        복잡한 금융 워크플로우를 자동화하는 멀티 에이전트 파이프라인을 설계하며,<br />{' '}
         엄격한 정합성과 신뢰성을 보장하는 실용적인 AI 프로덕트를 만듭니다.
       </p>
     </div>
   </div>
 
   <!-- 하단 2단 컬럼: 연락/지원 상태(밑줄) & 개발 철학(밑줄 없음) -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 pt-8 border-t border-[var(--color-border)]">
+  <div class="profile-principles grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 pt-8 border-t border-[var(--color-border)]">
     <div>
       <p class="section-label mb-3">Status &amp; Availability</p>
       <p class="text-ink underline decoration-[var(--color-accent)] underline-offset-4 decoration-1">

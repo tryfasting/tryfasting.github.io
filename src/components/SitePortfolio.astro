@@ -1,0 +1,76 @@
+---
+import 'pretendard/dist/web/variable/pretendardvariable.css';
+import '../styles/site.css';
+import { person, projects, experience, skills, type Campaign } from '../data/portfolio';
+import { portfolioThemes } from '../data/themes';
+interface Props { campaign: Campaign; }
+const { campaign } = Astro.props;
+const palette = portfolioThemes[campaign.theme];
+const selectedProjects = campaign.projectIds.map((id) => projects[id]);
+const canonical = new URL(`/${campaign.slug}/`, Astro.site ?? 'https://tryfasting.github.io');
+const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--accent-soft:${palette.accentSoft}`;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={campaign.description} />
+    <meta name="theme-color" content="#F7F5F1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${person.name} — AI / LLM Engineer`} />
+    <meta property="og:description" content={campaign.description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:locale" content="ko_KR" />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{person.name} — AI / LLM Engineer</title>
+  </head>
+  <body style={theme} data-campaign={campaign.slug}>
+    <a class="skip" href="#main">본문으로 건너뛰기</a>
+    <div class="site-shell">
+      <header class="topline">
+        <a href="#main" class="signature" aria-label="유선종 포트폴리오 처음으로">SJ<span aria-hidden="true">.</span></a>
+        <nav aria-label="주요 메뉴"><a href="#projects">프로젝트</a><a href="#experience">경험</a><a href="#contact">연락</a></nav>
+        <a class="github-top" href={person.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </header>
+      <main id="main">
+        <section class="intro" aria-labelledby="name">
+          <div class="identity">
+            <div><p class="eyebrow">{campaign.label}</p><h1 id="name">{person.name}<span class="name-dot" aria-hidden="true">.</span></h1><p class="role">{person.role}</p></div>
+            <img class="portrait" src="/portrait-local.jpg" width="72" height="93" alt="유선종 프로필 사진" />
+          </div>
+          <div class="identity-strip"><span>Python</span><span>Model evaluation</span><span>Data quality</span><a href={`mailto:${person.email}`}>{person.email} ↗</a></div>
+          <div class="editorial-intro"><p class="section-kicker">01 / ABOUT</p><p class="statement">{campaign.introduction.split('\n').map((line) => <span>{line}</span>)}</p></div>
+          <div class="intro-notes">
+            <div><h2>만들고, 비교하고, 개선합니다.</h2><p>문장 교정 모델의 라우팅부터 열화상 데이터 수집까지, 실제 문제를 코드와 데이터로 풀어봤습니다. 결과를 수치로 확인하고, 검증한 범위와 남은 한계를 함께 기록합니다.</p></div>
+            <div><h2>{campaign.focusTitle}</h2><p>{campaign.focus}</p></div>
+          </div>
+        </section>
+        <section id="projects" class="section projects" aria-labelledby="projects-heading">
+          <div class="section-heading"><p class="section-kicker">02 / SELECTED WORK</p><h2 id="projects-heading">문제를 정의하고,<br />구현으로 연결한 경험.</h2><span class="section-aside">2024 — 2025<br />TEAM PROJECTS</span></div>
+          {selectedProjects.map((project, index) => <article id={project.id} class="project">
+            <div class="project-index"><span>{String(index + 1).padStart(2, '0')}</span><span>{project.year}</span></div>
+            <div class="project-body">
+              <div class="project-title"><div><p class="project-subtitle">{project.subtitle}</p><h3>{project.name}</h3></div><div class="metric"><strong>{project.metric.value}</strong><span>{project.metric.label}</span></div></div>
+              <p class="project-summary">{project.summary}</p>
+              <p class="project-role">{project.role}</p>
+              <ol class="process" aria-label={`${project.name} 처리 흐름`}>{project.steps.map((step, i) => <li><span>{String(i + 1).padStart(2, '0')}</span>{step}</li>)}</ol>
+              <div class="project-bottom"><p class="stack-list">{project.stack.join(' · ')}</p>{project.repository && <a class="action-link" href={project.repository} target="_blank" rel="noopener noreferrer">GitHub에서 코드 보기 <span aria-hidden="true">↗</span></a>}</div>
+              <details><summary>구현 과정과 결과 <span aria-hidden="true">+</span></summary><div class="project-details"><h4>제가 맡은 일</h4><ul>{project.contribution.map((item) => <li>{item}</li>)}</ul><h4>결과와 검증 범위</h4><p>{project.outcome}</p><p class="limitation">{project.limitation}</p><h4>이 경험에서 이어갈 것</h4><p>{campaign.projectContext[project.id]}</p></div></details>
+              <p class="award">{project.award}</p>
+            </div>
+          </article>)}
+        </section>
+        <section id="experience" class="section" aria-labelledby="experience-heading">
+          <div class="section-heading"><p class="section-kicker">03 / EXPERIENCE</p><h2 id="experience-heading">기술을 배우고,<br />기준을 세우는 과정.</h2></div>
+          <div class="experience-list">{experience.map((item) => <article class="experience-row"><p class="period">{item.period}</p><div><p class="experience-category">{item.category}</p><h3>{item.title}</h3><p>{item.detail}</p>{item.result && <p class="experience-result">{item.result}</p>}</div></article>)}</div>
+          <p class="education">{person.education}<span>언어에 대한 관심을 AI 엔지니어링으로 이어가고 있습니다.</span></p>
+        </section>
+        <section class="section skills" aria-labelledby="skills-heading"><div class="section-heading"><p class="section-kicker">04 / TOOLKIT</p><h2 id="skills-heading">직접 사용하며 익힌 도구.</h2></div><div class="skills-grid">{skills.map((skill) => <article><h3>{skill.title}</h3><p class="skill-tools">{skill.items}</p><p>{skill.detail}</p></article>)}</div></section>
+        <section id="contact" class="section contact" aria-labelledby="contact-heading"><p class="section-kicker">05 / CONTACT</p><div><h2 id="contact-heading">함께 풀어갈 문제를<br />기다립니다.</h2><a class="contact-email" href={`mailto:${person.email}`}>{person.email} ↗</a><a class="action-link" href={person.github} target="_blank" rel="noopener noreferrer">GitHub · tryfasting ↗</a></div></section>
+      </main>
+      <footer><span>© {new Date().getFullYear()} {person.name}</span><span>AI / LLM ENGINEERING</span><a href="https://github.com/michael-andreuzza/swissfolio" target="_blank" rel="noopener noreferrer">Design reference · Swissfolio</a></footer>
+    </div>
+  </body>
+</html>

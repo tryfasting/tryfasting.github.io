@@ -1,0 +1,14 @@
+---
+import Portfolio from '../../../layouts/Portfolio.astro';
+import { portfolioThemes, type PortfolioTheme } from '../../../data/themes';
+import '../../../styles/experiments.css';
+import '../../../styles/refined.css';
+
+export function getStaticPaths() {
+  return import.meta.env.DEV
+    ? Object.keys(portfolioThemes).map((theme) => ({ params: { theme } }))
+    : [];
+}
+const theme = Astro.params.theme as PortfolioTheme;
+---
+<Portfolio variant="g-refined" theme={theme} />

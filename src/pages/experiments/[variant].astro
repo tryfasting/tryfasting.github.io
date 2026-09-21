@@ -1,0 +1,13 @@
+---
+import Portfolio from '../../layouts/Portfolio.astro';
+import '../../styles/experiments.css';
+
+// Development-only routes: experiments must never enter the Pages build.
+export function getStaticPaths() {
+  return import.meta.env.DEV
+    ? ['d-editorial', 'e-ledger', 'f-grid'].map((variant) => ({ params: { variant } }))
+    : [];
+}
+const { variant } = Astro.params;
+---
+<Portfolio variant={variant} />

@@ -10,3 +10,10 @@ dist/
 # Agent artifacts and prompts
 artifacts/
 prompt/
+
+# Local source extraction from private application documents
+planning/private/
+
+# Portraits are injected locally or during deployment, never committed.
+/유선종  2_1.jpg
+/public/portrait-local.jpg
