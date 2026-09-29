@@ -23,8 +23,15 @@
 
 ## 검수 위치
 
-- `artifacts/final/index.html`: 한화·일반용 375px/1440px 스크린샷 비교.
-- `artifacts/final/validation.json`: 자동 검증 결과.
+`artifacts/`(Git 제외)에는 세 폴더만 둔다.
+
+| 폴더 | 뜻 | 만드는 방법 |
+|---|---|---|
+| `dev/` | 0 · 로컬 프리뷰(배포 전) 검증 화면 | `node scripts/check-final.cjs` (검증 + `index.html`, `validation.json`) |
+| `main/` | 1 · 현재 운영 사이트 화면 | `scripts/rotate-artifacts.ps1` 안에서 `capture-site.cjs` 실행 |
+| `main-prev/` | -1 · 직전 배포본 화면 | 배포 후 `rotate-artifacts.ps1`이 기존 `main/`을 옮김 |
+
+배포가 실제 사이트에 반영된 것을 확인한 뒤 `./scripts/rotate-artifacts.ps1`을 한 번 실행한다. 기존 `main-prev/`는 휴지통으로 가고, `main/`은 `main-prev/`가 되며, 새 운영 화면이 `main/`에 찍힌다. 미리 확인하려면 `-WhatIf`를 붙인다. 9/18 디자인 실험(v1.6·v1.7·variant 캡처)은 2026-09-30에 휴지통으로 정리했다.
 - `http://127.0.0.1:4326/hanwha/`: 한화용 실제 동작 미리보기.
 - `http://127.0.0.1:4326/general/`: 일반용 실제 동작 미리보기.
 - 로컬 서버 종료 후에는 `npm run build`, `npm run preview -- --port 4326`으로 다시 시작.
@@ -62,4 +69,4 @@
 
 미리보기 서버를 실행한 뒤 `node scripts/check-final.cjs`로 4개 화면, 이미지 로딩, 가로 넘침, 회사별 색상과 canonical, 이메일과 저장소 주소, 상세 펼치기와 키보드 닫기, 연락 앵커, 잘못된 URL의 404를 확인한다. 이 스크립트는 현재 환경에 제공된 Playwright 런타임을 사용한다.
 
-사용자의 `main으로 배포해줘` 요청에 따라 배포를 완료했다. Actions 실행 `35608385109` 성공, 실제 사이트에서도 자동 검증 4개 화면을 통과했고 사진 파일이 로컬 원본과 일치함을 확인했다. 검증 기록은 로컬 `artifacts/live/`에 보관한다. OG 제목·설명은 설정되어 있으며 별도 공유 카드 이미지는 아직 없다.
+사용자의 `main으로 배포해줘` 요청에 따라 배포를 완료했다. Actions 실행 `35608385109` 성공, 실제 사이트에서도 자동 검증 4개 화면을 통과했고 사진 파일이 로컬 원본과 일치함을 확인했다. 이 첫 배포(`b477cc8`)의 화면은 현재 `artifacts/main-prev/`에 있다. 이후 배포에서는 위 순환 규칙을 따른다. OG 제목·설명은 설정되어 있으며 별도 공유 카드 이미지는 아직 없다.
