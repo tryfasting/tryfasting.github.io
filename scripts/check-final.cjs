@@ -39,6 +39,9 @@ const { chromium } = createRequire(runtime)('playwright');
         assert.equal(await page.locator('a[href="mailto:2015111004@yonsei.ac.kr"]').count(), 2);
         const text = await page.locator('main').innerText();
         assert(!/\[이름\]|\[기관명\]|36\.6%|98\.4%/.test(text));
+        // Claims not backed by apply/docs/FACTS.md or the practice EVIDENCE cards.
+        assert(!/FastAPI|F1 0\.78(?!8)|사전학습|LLM을 개발|이벤트 기반|파인튜닝|LoRA/.test(text), 'unsupported claim in page text');
+        assert.equal(await page.locator('#self-study .study').count(), 2);
         if (campaign === 'general') assert(!text.includes('한화'));
         await page.screenshot({ path: `${output}/${campaign}-${width}.png`, fullPage: true });
         await page.locator('details summary').first().click();

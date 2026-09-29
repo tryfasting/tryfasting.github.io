@@ -29,20 +29,20 @@ export const projects: Record<string, Project> = {
   smartrouter: {
     id: 'smartrouter', year: '2025', name: 'SmartRouter',
     subtitle: '문장 난이도에 따른 LLM 라우팅',
-    role: '팀장 · 데이터 구성, 분류 모델 학습, 임계값 분석, 서빙 구조 참여',
-    summary: '모든 문장을 같은 경량 모델에 보내던 교정 서비스에서 출발했습니다. 문장과 교정 의도를 함께 분류하고, 난이도에 따라 경량·고성능 모델로 요청을 나누는 파이프라인을 만들었습니다.',
+    role: '팀장 · 난이도 라벨 설계, 임계값·라우팅 설계, 교정 생성과 Judge 평가',
+    summary: '모든 문장을 같은 경량 모델에 보내던 한국어 문장 교정 서비스에서 출발했습니다. 교정 강도·문서 분야와 문장을 함께 입력해 난이도를 분류하고, 결과에 따라 경량·고성능 모델로 요청을 나누는 파이프라인을 만들었습니다.',
     contribution: [
-      '원문·교정 결과를 분석하고, 교정 강도와 문서 분야를 분류 입력에 반영했습니다.',
-      'klue/roberta-base 이진 분류기를 학습하고, 정밀도·재현율을 비교해 라우팅 임계값을 분석했습니다.',
-      'FastAPI 기반 서빙 구조에 참여해 분류 결과가 실제 모델 선택으로 이어지도록 연결했습니다.',
+      '정답이 없는 서비스 로그에서 원문·교정문 유사도를 역산하고, Gemini 채점으로 난이도 라벨을 설계했습니다.',
+      '팀원과 함께 klue/roberta-base 이진 분류기를 학습하고, 정밀도·재현율을 비교해 기본 라우팅 임계값을 0.25로 정했습니다.',
+      '경량 모델 단독·상위 모델 단독·라우터 경유 세 시나리오의 교정 결과를 LLM Judge로 비교했습니다.',
     ],
-    outcome: '분류 모델 F1 0.78을 확인했고, 실제 기본 라우팅 임계값은 0.25로 설정했습니다. 이어드림스쿨 스타트업 연계 프로젝트 장려상(3등)을 수상했습니다.',
-    limitation: '오프라인 검증 결과입니다. 실제 서비스의 사용자 수락률이나 이탈률 변화까지 검증하지는 못했습니다.',
-    stack: ['Python', 'PyTorch', 'Transformers', 'FastAPI', 'Pandas'],
-    metric: { value: '0.78', label: '분류 모델 F1' },
+    outcome: '분류 모델 F1 0.788(임계값 0.25)을 확인했고, 이어드림스쿨 스타트업 연계 프로젝트 장려상(3등)을 수상했습니다.',
+    limitation: '이후 AI 도구의 보조를 받아 재검증한 결과, 분류기 결정의 99.65%가 교정 강도 규칙과 같았습니다. 라벨이 강도 태그에서 만들어져 생긴 지름길 학습이었고, 모델 선택과 평가에 같은 test 분할을 쓴 한계도 함께 기록했습니다. 공개 저장소는 AI 보조로 재구성한 평가 감사본입니다.',
+    stack: ['Python', 'PyTorch', 'Transformers', 'Pandas', 'Gemini API'],
+    metric: { value: '0.788', label: '분류 모델 F1' },
     award: '이어드림스쿨 · 장려상(3등)',
     repository: 'https://github.com/tryfasting/yds-dmdp-smart-router',
-    steps: ['원문 + 교정 의도', 'RoBERTa 난이도 분류', '경량 / 고성능 모델 선택'],
+    steps: ['강도·분야 + 문장', 'RoBERTa 난이도 분류', '경량 / 고성능 모델 선택'],
   },
   defect: {
     id: 'defect', year: '2024', name: 'Defect Detection',
@@ -63,6 +63,49 @@ export const projects: Record<string, Project> = {
   },
 };
 
+export interface Study {
+  id: string;
+  period: string;
+  name: string;
+  subtitle: string;
+  summary: string;
+  built: string[];
+  verified: string;
+  limitation: string;
+  stack: string[];
+  repository?: string;
+}
+
+// Keep wording within each project's EVIDENCE.md and apply/docs/FACTS.md "Practice" section.
+export const studies: Record<string, Study> = {
+  'korean-char-lm': {
+    id: 'korean-char-lm', period: '2026.09', name: 'korean-char-lm',
+    subtitle: '글자 단위 소형 언어모델 구현',
+    summary: 'Transformer가 다음 글자를 예측하는 과정을 코드로 이해하려고, PyTorch 표준 모듈로 한국어 글자 단위 Causal LM을 조립해 학습·저장·생성까지 한 파일에서 이어 봤습니다.',
+    built: [
+      '한국어 글자 사전과 encode/decode, 무작위 시퀀스 배치를 만들었습니다.',
+      'nn.MultiheadAttention과 causal mask로 Transformer 블록 1개짜리 모델을 조립하고, AdamW로 10,000스텝 학습했습니다.',
+      '가중치·글자 사전·문맥 길이를 체크포인트에 함께 저장하고, 다시 불러와 Temperature 0.2와 1.0의 생성 결과를 비교했습니다.',
+    ],
+    verified: '첫 학습 Loss가 이론치 ln(어휘 크기) 근처인지 대조해 초기화와 손실 계산을 점검했습니다.',
+    limitation: '소형 문학 텍스트로 학습한 실습 모델입니다. 별도 평가 분할이 없어 train loss를 품질 지표로 쓰지 않습니다. 단계 가이드와 피드백은 AI 보조를 받았고, 코드는 직접 작성했습니다.',
+    stack: ['Python', 'PyTorch'],
+  },
+  'screen-tracker': {
+    id: 'screen-tracker', period: '2026.08', name: 'screen-tracker',
+    subtitle: 'Windows 활성 창 사용 기록 CLI',
+    summary: '어떤 프로그램에 시간을 쓰는지 기록하고 분류하는 CLI를 Python 표준 라이브러리만으로 만들었습니다. OS API 호출, 로그 설계, 설정 기반 분류, 리포트 출력을 한 도구 안에서 다뤘습니다.',
+    built: [
+      'ctypes로 Win32 API를 호출해 활성 창과 프로세스 정보를 주기적으로 폴링하고 CSV로 기록했습니다.',
+      'TOML 규칙으로 프로그램을 카테고리에 분류하고, 일간·주간 리포트와 기간 비교를 출력했습니다.',
+      'argparse 옵션과 subprocess로 트래커를 백그라운드에서 시작·종료할 수 있게 했습니다.',
+    ],
+    verified: '단계별 완료 기준 5개 항목을 피드백으로 점검받았고, 폴링 완성본의 CLI 실행을 확인했습니다.',
+    limitation: '폴링 대신 이벤트 훅으로 바꾸는 작업은 모듈 분리 중 순환 import 문제로 보류했습니다. 자동 테스트는 없습니다.',
+    stack: ['Python', 'ctypes', 'tomllib', 'csv', 'subprocess'],
+  },
+};
+
 export interface Campaign {
   slug: string;
   theme: PortfolioTheme;
@@ -73,6 +116,7 @@ export interface Campaign {
   focus: string;
   projectIds: string[];
   projectContext: Record<string, string>;
+  studyIds: string[];
 }
 
 export const campaigns: Record<string, Campaign> = {
@@ -87,6 +131,7 @@ export const campaigns: Record<string, Campaign> = {
       smartrouter: '모델 비교·검증과 평가 기준을 다뤄본 경험을 금융 AI의 품질 개선으로 이어가고 싶습니다.',
       defect: '모델에 앞서 안정적인 입력 데이터가 필요하다는 점을 현장에서 배웠습니다.',
     },
+    studyIds: ['korean-char-lm', 'screen-tracker'],
   },
   general: {
     slug: 'general', theme: 'cobalt', label: 'AI / LLM ENGINEERING',
@@ -96,9 +141,10 @@ export const campaigns: Record<string, Campaign> = {
     focus: 'Python으로 도구를 만들고, PyTorch로 모델의 동작을 이해하는 연습을 병행합니다. 언어모델을 학습·평가·개선해 텍스트를 다루는 일의 번거로움을 줄이는 엔지니어로 성장하고 싶습니다.',
     projectIds: ['smartrouter', 'defect'],
     projectContext: {
-      smartrouter: '데이터 구성부터 분류 모델 학습, 평가와 서빙 연결까지 경험했습니다.',
+      smartrouter: '데이터 구성부터 분류 모델 학습·평가, 그리고 좋은 지표를 다시 의심하는 재검증까지 경험했습니다.',
       defect: '하드웨어 통신의 병목을 해결하고 모델 실험에 필요한 데이터를 직접 확보했습니다.',
     },
+    studyIds: ['korean-char-lm', 'screen-tracker'],
   },
 };
 
@@ -109,7 +155,7 @@ export const experience = [
 ];
 
 export const skills = [
-  { title: '모델 학습 · 평가', items: 'PyTorch / Transformers / scikit-learn', detail: '이진 분류기 학습, F1 평가, 정밀도·재현율과 임계값 분석' },
-  { title: '데이터 · 구현', items: 'Python / Pandas / FastAPI', detail: '로그 분석과 전처리, 분류 결과의 API 서빙 연결' },
+  { title: '모델 학습 · 평가', items: 'PyTorch / Transformers / scikit-learn', detail: '이진 분류기 학습, 정밀도·재현율과 임계값 분석, 소형 Causal LM 직접 조립' },
+  { title: '데이터 · 구현', items: 'Python / Pandas / 표준 라이브러리', detail: '서비스 로그 분석과 라벨 전처리, ctypes·tomllib·argparse 기반 CLI 도구' },
   { title: '현장 데이터 수집', items: 'Raspberry Pi / SPI / OpenCV', detail: '열화상 센서 통신, 이미지 수집과 데이터 구성' },
 ];

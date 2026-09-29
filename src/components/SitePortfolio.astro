@@ -1,12 +1,13 @@
 ---
 import 'pretendard/dist/web/variable/pretendardvariable.css';
 import '../styles/site.css';
-import { person, projects, experience, skills, type Campaign } from '../data/portfolio';
+import { person, projects, studies, experience, skills, type Campaign } from '../data/portfolio';
 import { portfolioThemes } from '../data/themes';
 interface Props { campaign: Campaign; }
 const { campaign } = Astro.props;
 const palette = portfolioThemes[campaign.theme];
 const selectedProjects = campaign.projectIds.map((id) => projects[id]);
+const selectedStudies = campaign.studyIds.map((id) => studies[id]);
 const canonical = new URL(`/${campaign.slug}/`, Astro.site ?? 'https://tryfasting.github.io');
 const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--accent-soft:${palette.accentSoft}`;
 ---
@@ -62,13 +63,23 @@ const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--ac
             </div>
           </article>)}
         </section>
+        {selectedStudies.length > 0 && <section id="self-study" class="section studies" aria-labelledby="studies-heading">
+          <div class="section-heading"><p class="section-kicker">03 / SELF-STUDY</p><h2 id="studies-heading">직접 만들며,<br />원리를 익힌 것.</h2><span class="section-aside">2026<br />PERSONAL PRACTICE</span></div>
+          <div class="studies-grid">{selectedStudies.map((study) => <article id={study.id} class="study">
+            <p class="study-meta"><span>{study.period}</span><span>{study.subtitle}</span></p>
+            <h3>{study.name}</h3>
+            <p class="study-summary">{study.summary}</p>
+            <div class="project-bottom"><p class="stack-list">{study.stack.join(' · ')}</p>{study.repository && <a class="action-link" href={study.repository} target="_blank" rel="noopener noreferrer">GitHub에서 코드 보기 <span aria-hidden="true">↗</span></a>}</div>
+            <details><summary>구현한 내용 <span aria-hidden="true">+</span></summary><div class="project-details"><ul>{study.built.map((item) => <li>{item}</li>)}</ul><h4>확인한 방법</h4><p>{study.verified}</p><p class="limitation">{study.limitation}</p></div></details>
+          </article>)}</div>
+        </section>}
         <section id="experience" class="section" aria-labelledby="experience-heading">
-          <div class="section-heading"><p class="section-kicker">03 / EXPERIENCE</p><h2 id="experience-heading">기술을 배우고,<br />기준을 세우는 과정.</h2></div>
+          <div class="section-heading"><p class="section-kicker">04 / EXPERIENCE</p><h2 id="experience-heading">기술을 배우고,<br />기준을 세우는 과정.</h2></div>
           <div class="experience-list">{experience.map((item) => <article class="experience-row"><p class="period">{item.period}</p><div><p class="experience-category">{item.category}</p><h3>{item.title}</h3><p>{item.detail}</p>{item.result && <p class="experience-result">{item.result}</p>}</div></article>)}</div>
           <p class="education">{person.education}<span>언어에 대한 관심을 AI 엔지니어링으로 이어가고 있습니다.</span></p>
         </section>
-        <section class="section skills" aria-labelledby="skills-heading"><div class="section-heading"><p class="section-kicker">04 / TOOLKIT</p><h2 id="skills-heading">직접 사용하며 익힌 도구.</h2></div><div class="skills-grid">{skills.map((skill) => <article><h3>{skill.title}</h3><p class="skill-tools">{skill.items}</p><p>{skill.detail}</p></article>)}</div></section>
-        <section id="contact" class="section contact" aria-labelledby="contact-heading"><p class="section-kicker">05 / CONTACT</p><div><h2 id="contact-heading">함께 풀어갈 문제를<br />기다립니다.</h2><a class="contact-email" href={`mailto:${person.email}`}>{person.email} ↗</a><a class="action-link" href={person.github} target="_blank" rel="noopener noreferrer">GitHub · tryfasting ↗</a></div></section>
+        <section class="section skills" aria-labelledby="skills-heading"><div class="section-heading"><p class="section-kicker">05 / TOOLKIT</p><h2 id="skills-heading">직접 사용하며 익힌 도구.</h2></div><div class="skills-grid">{skills.map((skill) => <article><h3>{skill.title}</h3><p class="skill-tools">{skill.items}</p><p>{skill.detail}</p></article>)}</div></section>
+        <section id="contact" class="section contact" aria-labelledby="contact-heading"><p class="section-kicker">06 / CONTACT</p><div><h2 id="contact-heading">함께 풀어갈 문제를<br />기다립니다.</h2><a class="contact-email" href={`mailto:${person.email}`}>{person.email} ↗</a><a class="action-link" href={person.github} target="_blank" rel="noopener noreferrer">GitHub · tryfasting ↗</a></div></section>
       </main>
       <footer><span>© {new Date().getFullYear()} {person.name}</span><span>AI / LLM ENGINEERING</span><a href="https://github.com/michael-andreuzza/swissfolio" target="_blank" rel="noopener noreferrer">Design reference · Swissfolio</a></footer>
     </div>
