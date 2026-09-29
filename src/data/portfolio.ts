@@ -182,7 +182,7 @@ export const campaigns: Record<string, Campaign> = {
 };
 
 export const experience = [
-  { period: '2025.02 — 2025.12', title: '이어드림스쿨 5기', category: 'AI 기술인력 양성 · DS 트랙', detail: '데이터 분석·머신러닝·딥러닝을 학습하고, 스타트업 연계 SmartRouter 프로젝트를 수행했습니다.', result: '스타트업 연계 프로젝트 장려상(3등)' },
+  { period: '2025.03 — 2025.12', title: '이어드림스쿨 5기', category: 'AI 기술인력 양성 · DS 트랙', detail: '데이터 분석·머신러닝·딥러닝을 학습하고, 스타트업 연계 SmartRouter 프로젝트를 수행했습니다.', result: '스타트업 연계 프로젝트 장려상(3등)' },
   { period: '2024.04 — 2024.07', title: '포스코 AI·Big Data 아카데미 26기', category: 'AI · Big Data 교육', detail: 'Python, 데이터 분석, 컴퓨터 비전과 AIoT를 학습하고 주택 하자 탐지 프로젝트에 참여했습니다.', result: '최종 프로젝트 우수상' },
   { period: 'INTERNSHIP', title: '코드비전', category: '데이터 라벨링 · 품질 기준 개선', detail: '컴퓨터 비전 데이터의 모호한 객체 경계 기준을 발견했습니다. 산업 표준 자료를 조사해 가이드라인 개선안을 문서화하고 작업 일관성을 높였습니다.', result: '' },
 ];
