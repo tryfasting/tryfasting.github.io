@@ -23,6 +23,7 @@ export interface Project {
   award: string;
   repository?: string;
   steps: string[];
+  nextStep: string;
 }
 
 export const projects: Record<string, Project> = {
@@ -43,6 +44,7 @@ export const projects: Record<string, Project> = {
     award: '이어드림스쿨 · 장려상(3등)',
     repository: 'https://github.com/tryfasting/yds-dmdp-smart-router',
     steps: ['강도·분야 + 문장', 'RoBERTa 난이도 분류', '경량 / 고성능 모델 선택'],
+    nextStep: '데이터 구성부터 분류 모델 학습·평가, 그리고 좋은 지표를 다시 의심하는 재검증까지 경험했습니다.',
   },
   defect: {
     id: 'defect', year: '2024', name: 'Defect Detection',
@@ -60,6 +62,7 @@ export const projects: Record<string, Project> = {
     metric: { value: 'SPI', label: '센서 → 데이터 수집' },
     award: '포스코 AI·Big Data 아카데미 · 우수상',
     steps: ['누수 모사 환경', '열화상 센서 · SPI 수집', '이미지 데이터 구성'],
+    nextStep: '하드웨어 통신의 병목을 해결하고 모델 실험에 필요한 데이터를 직접 확보했습니다.',
   },
 };
 
@@ -106,46 +109,76 @@ export const studies: Record<string, Study> = {
   },
 };
 
+export interface Learning {
+  id: string;
+  kind: 'book' | 'course';
+  title: string;
+  author: string;
+  progress: string;
+  takeaways: string[];
+  cover?: string;
+  coverLines?: string[];
+  repository: string;
+}
+
+export const learnings: Record<string, Learning> = {
+  'tiny-python-projects': {
+    id: 'tiny-python-projects', kind: 'book', title: 'Tiny Python Projects',
+    author: 'Ken Youens-Clark · Manning',
+    progress: '2026.07 · 21장 중 14장',
+    takeaways: [
+      'argparse·정규표현식·pathlib·파일 입출력으로 작은 CLI를 만들고, 장마다 주어진 pytest 테스트를 통과시켰습니다.',
+      '원본 저장소를 fork해 uv 환경으로 옮기고, 테스트 스크립트를 Windows·macOS 양쪽에서 돌도록 고쳤습니다.',
+    ],
+    cover: '/covers/tiny-python-projects.webp',
+    repository: 'https://github.com/tryfasting/tiny_python_projects',
+  },
+  'deep-learning-pytorch-textbook': {
+    id: 'deep-learning-pytorch-textbook', kind: 'book', title: '딥 러닝 파이토치 교과서',
+    author: '위키독스 공개 도서',
+    progress: '1~13장 실습 노트북',
+    takeaways: [
+      '선형·로지스틱 회귀부터 MLP, CNN, RNN/LSTM까지 PyTorch로 직접 따라 치며 구현했습니다.',
+      '토큰화·정제 같은 NLP 전처리와 Word2Vec·nn.Embedding, RNN 텍스트 분류까지 이어서 실습했습니다.',
+    ],
+    cover: '/covers/deep-learning-pytorch-textbook.webp',
+    repository: 'https://github.com/tryfasting/deeplearning-pytorch-textbook',
+  },
+  'karpathy-zero-to-hero': {
+    id: 'karpathy-zero-to-hero', kind: 'course', title: 'Neural Networks: Zero to Hero',
+    author: 'Andrej Karpathy · 강의',
+    progress: '전 시리즈 9강 따라 구현',
+    takeaways: [
+      'micrograd로 자동 미분과 역전파를 직접 만들고, makemore 시리즈에서 MLP·BatchNorm·WaveNet 구조를 따라 구현했습니다.',
+      'GPT, BPE 토크나이저, GPT-2 재현까지 강의를 따라가며 Transformer 학습 코드를 한 줄씩 옮겨 봤습니다.',
+    ],
+    coverLines: ['micrograd', 'makemore', 'GPT', 'GPT-2'],
+    repository: 'https://github.com/tryfasting/karpathy-zero-to-hero-clone',
+  },
+};
+
+// Page copy is shared by every company page on purpose; campaigns only change color and eyebrow.
+export const profile = {
+  description: '유선종의 개발 포트폴리오. Python, 언어모델 학습·평가, 센서 데이터 수집 프로젝트.',
+  introduction: '데이터에서 모델까지,\n직접 만들고 확인하며 배웁니다.',
+  focusTitle: '지금 집중하는 방향',
+  focus: 'Python으로 도구를 만들고, PyTorch로 모델의 동작을 이해하는 연습을 병행합니다. 언어모델을 학습·평가·개선해 텍스트를 다루는 일의 번거로움을 줄이는 엔지니어로 성장하고 싶습니다.',
+  projectIds: ['smartrouter', 'defect'],
+  studyIds: ['korean-char-lm', 'screen-tracker'],
+  learningIds: ['tiny-python-projects', 'deep-learning-pytorch-textbook', 'karpathy-zero-to-hero'],
+};
+
 export interface Campaign {
   slug: string;
   theme: PortfolioTheme;
   label: string;
-  description: string;
-  introduction: string;
-  focusTitle: string;
-  focus: string;
-  projectIds: string[];
-  projectContext: Record<string, string>;
-  studyIds: string[];
+  indexable?: boolean;
 }
 
 export const campaigns: Record<string, Campaign> = {
-  hanwha: {
-    slug: 'hanwha', theme: 'hanwha', label: 'HANWHA FINANCE · AI / DATA',
-    description: '유선종의 AI·LLM 포트폴리오. 모델 평가, LLM 라우팅, 데이터 품질 개선 경험을 소개합니다.',
-    introduction: '언어모델을 평가하고 개선해,\n사람의 읽기와 쓰기를 돕고 싶습니다.',
-    focusTitle: '금융 AI에서 이어가고 싶은 일',
-    focus: '문장 교정 모델의 품질·비용 균형을 고민한 경험을 바탕으로, 금융 문서와 고객 안내에 맞는 평가 기준을 배우고 싶습니다. 작은 과제부터 개선 전후를 비교하며 신뢰할 수 있는 AI를 만드는 데 기여하겠습니다.',
-    projectIds: ['smartrouter', 'defect'],
-    projectContext: {
-      smartrouter: '모델 비교·검증과 평가 기준을 다뤄본 경험을 금융 AI의 품질 개선으로 이어가고 싶습니다.',
-      defect: '모델에 앞서 안정적인 입력 데이터가 필요하다는 점을 현장에서 배웠습니다.',
-    },
-    studyIds: ['korean-char-lm', 'screen-tracker'],
-  },
-  general: {
-    slug: 'general', theme: 'cobalt', label: 'AI / LLM ENGINEERING',
-    description: '유선종의 개발 포트폴리오. Python, 언어모델 학습·평가, 센서 데이터 수집 프로젝트.',
-    introduction: '데이터에서 모델까지,\n직접 만들고 확인하며 배웁니다.',
-    focusTitle: '지금 집중하는 방향',
-    focus: 'Python으로 도구를 만들고, PyTorch로 모델의 동작을 이해하는 연습을 병행합니다. 언어모델을 학습·평가·개선해 텍스트를 다루는 일의 번거로움을 줄이는 엔지니어로 성장하고 싶습니다.',
-    projectIds: ['smartrouter', 'defect'],
-    projectContext: {
-      smartrouter: '데이터 구성부터 분류 모델 학습·평가, 그리고 좋은 지표를 다시 의심하는 재검증까지 경험했습니다.',
-      defect: '하드웨어 통신의 병목을 해결하고 모델 실험에 필요한 데이터를 직접 확보했습니다.',
-    },
-    studyIds: ['korean-char-lm', 'screen-tracker'],
-  },
+  hanwha: { slug: 'hanwha', theme: 'hanwha', label: 'HANWHA FINANCE · AI / DATA' },
+  'hanwha-ocean': { slug: 'hanwha-ocean', theme: 'hanwha', label: 'HANWHA OCEAN · AX' },
+  general: { slug: 'general', theme: 'cobalt', label: 'AI / LLM ENGINEERING', indexable: true },
 };
 
 export const experience = [

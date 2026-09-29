@@ -1,13 +1,14 @@
 ---
 import 'pretendard/dist/web/variable/pretendardvariable.css';
 import '../styles/site.css';
-import { person, projects, studies, experience, skills, type Campaign } from '../data/portfolio';
+import { person, profile, projects, studies, learnings, experience, skills, type Campaign } from '../data/portfolio';
 import { portfolioThemes } from '../data/themes';
 interface Props { campaign: Campaign; }
 const { campaign } = Astro.props;
 const palette = portfolioThemes[campaign.theme];
-const selectedProjects = campaign.projectIds.map((id) => projects[id]);
-const selectedStudies = campaign.studyIds.map((id) => studies[id]);
+const selectedProjects = profile.projectIds.map((id) => projects[id]);
+const selectedStudies = profile.studyIds.map((id) => studies[id]);
+const selectedLearnings = profile.learningIds.map((id) => learnings[id]);
 const canonical = new URL(`/${campaign.slug}/`, Astro.site ?? 'https://tryfasting.github.io');
 const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--accent-soft:${palette.accentSoft}`;
 ---
@@ -16,11 +17,12 @@ const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--ac
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={campaign.description} />
+    <meta name="description" content={profile.description} />
+    {!campaign.indexable && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#F7F5F1" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={`${person.name} — AI / LLM Engineer`} />
-    <meta property="og:description" content={campaign.description} />
+    <meta property="og:description" content={profile.description} />
     <meta property="og:url" content={canonical.href} />
     <meta property="og:locale" content="ko_KR" />
     <link rel="canonical" href={canonical.href} />
@@ -42,10 +44,10 @@ const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--ac
             <img class="portrait" src="/portrait-local.jpg" width="72" height="93" alt="유선종 프로필 사진" />
           </div>
           <div class="identity-strip"><span>Python</span><span>Model evaluation</span><span>Data quality</span><a href={`mailto:${person.email}`}>{person.email} ↗</a></div>
-          <div class="editorial-intro"><p class="section-kicker">01 / ABOUT</p><p class="statement">{campaign.introduction.split('\n').map((line) => <span>{line}</span>)}</p></div>
+          <div class="editorial-intro"><p class="section-kicker">01 / ABOUT</p><p class="statement">{profile.introduction.split('\n').map((line) => <span>{line}</span>)}</p></div>
           <div class="intro-notes">
             <div><h2>만들고, 비교하고, 개선합니다.</h2><p>문장 교정 모델의 라우팅부터 열화상 데이터 수집까지, 실제 문제를 코드와 데이터로 풀어봤습니다. 결과를 수치로 확인하고, 검증한 범위와 남은 한계를 함께 기록합니다.</p></div>
-            <div><h2>{campaign.focusTitle}</h2><p>{campaign.focus}</p></div>
+            <div><h2>{profile.focusTitle}</h2><p>{profile.focus}</p></div>
           </div>
         </section>
         <section id="projects" class="section projects" aria-labelledby="projects-heading">
@@ -58,7 +60,7 @@ const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--ac
               <p class="project-role">{project.role}</p>
               <ol class="process" aria-label={`${project.name} 처리 흐름`}>{project.steps.map((step, i) => <li><span>{String(i + 1).padStart(2, '0')}</span>{step}</li>)}</ol>
               <div class="project-bottom"><p class="stack-list">{project.stack.join(' · ')}</p>{project.repository && <a class="action-link" href={project.repository} target="_blank" rel="noopener noreferrer">GitHub에서 코드 보기 <span aria-hidden="true">↗</span></a>}</div>
-              <details><summary>구현 과정과 결과 <span aria-hidden="true">+</span></summary><div class="project-details"><h4>제가 맡은 일</h4><ul>{project.contribution.map((item) => <li>{item}</li>)}</ul><h4>결과와 검증 범위</h4><p>{project.outcome}</p><p class="limitation">{project.limitation}</p><h4>이 경험에서 이어갈 것</h4><p>{campaign.projectContext[project.id]}</p></div></details>
+              <details><summary>구현 과정과 결과 <span aria-hidden="true">+</span></summary><div class="project-details"><h4>제가 맡은 일</h4><ul>{project.contribution.map((item) => <li>{item}</li>)}</ul><h4>결과와 검증 범위</h4><p>{project.outcome}</p><p class="limitation">{project.limitation}</p><h4>이 경험에서 이어갈 것</h4><p>{project.nextStep}</p></div></details>
               <p class="award">{project.award}</p>
             </div>
           </article>)}
@@ -73,13 +75,28 @@ const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--ac
             <details><summary>구현한 내용 <span aria-hidden="true">+</span></summary><div class="project-details"><ul>{study.built.map((item) => <li>{item}</li>)}</ul><h4>확인한 방법</h4><p>{study.verified}</p><p class="limitation">{study.limitation}</p></div></details>
           </article>)}</div>
         </section>}
+        {selectedLearnings.length > 0 && <section id="learning" class="section learning" aria-labelledby="learning-heading">
+          <div class="section-heading"><p class="section-kicker">04 / LEARNING</p><h2 id="learning-heading">읽고, 따라 치며<br />기초를 다진 것.</h2><span class="section-aside">BOOKS &amp; COURSE<br />FOLLOW-ALONG</span></div>
+          <div class="learning-list">{selectedLearnings.map((item) => <article id={item.id} class="learning-card">
+            {item.cover
+              ? <img class="cover" src={item.cover} width="96" height="124" alt={`${item.title} 표지`} />
+              : <div class="cover cover-type" aria-hidden="true">{item.coverLines?.map((line) => <span>{line}</span>)}</div>}
+            <div class="learning-body">
+              <p class="study-meta"><span>{item.kind === 'book' ? 'BOOK' : 'COURSE'}</span><span>{item.progress}</span></p>
+              <h3>{item.title}</h3>
+              <p class="learning-author">{item.author}</p>
+              <a class="action-link" href={item.repository} target="_blank" rel="noopener noreferrer">학습 코드 보기 <span aria-hidden="true">↗</span></a>
+              <details><summary>배운 점 <span aria-hidden="true">+</span></summary><div class="project-details"><ul>{item.takeaways.map((line) => <li>{line}</li>)}</ul></div></details>
+            </div>
+          </article>)}</div>
+        </section>}
         <section id="experience" class="section" aria-labelledby="experience-heading">
-          <div class="section-heading"><p class="section-kicker">04 / EXPERIENCE</p><h2 id="experience-heading">기술을 배우고,<br />기준을 세우는 과정.</h2></div>
+          <div class="section-heading"><p class="section-kicker">05 / EXPERIENCE</p><h2 id="experience-heading">기술을 배우고,<br />기준을 세우는 과정.</h2></div>
           <div class="experience-list">{experience.map((item) => <article class="experience-row"><p class="period">{item.period}</p><div><p class="experience-category">{item.category}</p><h3>{item.title}</h3><p>{item.detail}</p>{item.result && <p class="experience-result">{item.result}</p>}</div></article>)}</div>
           <p class="education">{person.education}<span>언어에 대한 관심을 AI 엔지니어링으로 이어가고 있습니다.</span></p>
         </section>
-        <section class="section skills" aria-labelledby="skills-heading"><div class="section-heading"><p class="section-kicker">05 / TOOLKIT</p><h2 id="skills-heading">직접 사용하며 익힌 도구.</h2></div><div class="skills-grid">{skills.map((skill) => <article><h3>{skill.title}</h3><p class="skill-tools">{skill.items}</p><p>{skill.detail}</p></article>)}</div></section>
-        <section id="contact" class="section contact" aria-labelledby="contact-heading"><p class="section-kicker">06 / CONTACT</p><div><h2 id="contact-heading">함께 풀어갈 문제를<br />기다립니다.</h2><a class="contact-email" href={`mailto:${person.email}`}>{person.email} ↗</a><a class="action-link" href={person.github} target="_blank" rel="noopener noreferrer">GitHub · tryfasting ↗</a></div></section>
+        <section class="section skills" aria-labelledby="skills-heading"><div class="section-heading"><p class="section-kicker">06 / TOOLKIT</p><h2 id="skills-heading">직접 사용하며 익힌 도구.</h2></div><div class="skills-grid">{skills.map((skill) => <article><h3>{skill.title}</h3><p class="skill-tools">{skill.items}</p><p>{skill.detail}</p></article>)}</div></section>
+        <section id="contact" class="section contact" aria-labelledby="contact-heading"><p class="section-kicker">07 / CONTACT</p><div><h2 id="contact-heading">함께 풀어갈 문제를<br />기다립니다.</h2><a class="contact-email" href={`mailto:${person.email}`}>{person.email} ↗</a><a class="action-link" href={person.github} target="_blank" rel="noopener noreferrer">GitHub · tryfasting ↗</a></div></section>
       </main>
       <footer><span>© {new Date().getFullYear()} {person.name}</span><span>AI / LLM ENGINEERING</span><a href="https://github.com/michael-andreuzza/swissfolio" target="_blank" rel="noopener noreferrer">Design reference · Swissfolio</a></footer>
     </div>

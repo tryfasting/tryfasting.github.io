@@ -15,7 +15,9 @@ const { chromium } = createRequire(runtime)('playwright');
     const page = await browser.newPage({ deviceScaleFactor: 1 });
     page.on('pageerror', error => errors.push(error.message));
     page.on('requestfailed', request => errors.push(request.url()));
-    for (const campaign of ['hanwha', 'general']) {
+    const accents = { hanwha: '#F37321', 'hanwha-ocean': '#F37321', general: '#1F4FD1' };
+    const bodies = {};
+    for (const campaign of Object.keys(accents)) {
       for (const width of [1440, 375]) {
         await page.setViewportSize({ width, height: 1000 });
         const response = await page.goto(`http://127.0.0.1:4326/${campaign}/`, { waitUntil: 'networkidle' });
@@ -32,7 +34,8 @@ const { chromium } = createRequire(runtime)('playwright');
         assert.equal(result.overflow, false);
         assert.equal(result.images, true);
         assert.equal(result.unsafeLinks, 0);
-        assert.equal(result.accent, campaign === 'hanwha' ? '#F37321' : '#1F4FD1');
+        assert.equal(result.accent, accents[campaign]);
+        assert.equal(await page.locator('meta[name=robots][content=noindex]').count(), campaign === 'general' ? 0 : 1);
         assert.equal(result.canonical, `https://tryfasting.github.io/${campaign}/`);
         assert.equal(await page.locator('h1').textContent(), '유선종.');
         assert.equal(await page.locator('a[href="https://github.com/tryfasting/yds-dmdp-smart-router"]').count(), 1);
@@ -42,6 +45,12 @@ const { chromium } = createRequire(runtime)('playwright');
         // Claims not backed by apply/docs/FACTS.md or the practice EVIDENCE cards.
         assert(!/FastAPI|F1 0\.78(?!8)|사전학습|LLM을 개발|이벤트 기반|파인튜닝|LoRA/.test(text), 'unsupported claim in page text');
         assert.equal(await page.locator('#self-study .study').count(), 2);
+        assert.equal(await page.locator('#learning .learning-card').count(), 3);
+        assert.equal(await page.locator('#learning details').count(), 3);
+        assert.equal(await page.locator('#learning details[open]').count(), 0);
+        // Company pages may differ only in color and eyebrow; the body copy must stay shared.
+        const shared = text.replace(await page.locator('.eyebrow').innerText(), '');
+        if (width === 1440) bodies[campaign] = shared;
         if (campaign === 'general') assert(!text.includes('한화'));
         await page.screenshot({ path: `${output}/${campaign}-${width}.png`, fullPage: true });
         await page.locator('details summary').first().click();
@@ -54,7 +63,9 @@ const { chromium } = createRequire(runtime)('playwright');
         results.push({ campaign, width, ...result });
       }
     }
+    assert.equal(new Set(Object.values(bodies)).size, 1, 'campaign pages must share the same copy');
     assert.equal((await page.goto('http://127.0.0.1:4326/')).status(), 200);
+    assert.equal(await page.locator('.eyebrow').innerText(), 'HANWHA FINANCE · AI / DATA');
     assert.equal((await page.goto('http://127.0.0.1:4326/unknown-company/')).status(), 404);
     assert.equal((await page.goto('http://127.0.0.1:4326/experiments/d-document/')).status(), 404);
     assert.deepEqual(errors, []);
