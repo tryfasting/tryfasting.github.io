@@ -31,3 +31,10 @@
 “AGENTS.md와 policy/company-pages.md를 읽고, ○○회사 제출용 URL을 준비해줘. 공통 내용은 유지하고 회사에 맞는 디자인·색상만 적용해줘.”
 
 미리보기만 필요한지, main 배포까지 필요한지는 작업 요청에서 구분한다.
+
+## CJ올리브네트웍스 테마 (2026-09-30)
+
+- URL: `/cj-olivenetworks/`, 상단 표기: `CJ OLIVENETWORKS · AI / DATA`.
+- 공식 [회사 소개](https://www.cjolivenetworks.co.kr/company/overview)의 [로고 SVG](https://www.cjolivenetworks.co.kr/images/common/logo.svg)에서 파랑 `#006ECD`, 빨강 `#EF141D`, 주황 `#FF9700`을 확인했다. 공식 [웹사이트 CSS](https://www.cjolivenetworks.co.kr/css/common.css)도 `#006ECD`를 사용한다. 이는 공식 웹 자산에서 확인한 값이며 별도의 전체 CI 매뉴얼 준수 인증을 뜻하지 않는다.
+- 파랑을 주 강조색으로, 세 가지 색은 96×5px 구분선 마커에만 사용한다. 본문 색과 편집 그리드는 유지한다.
+- 작은 글자용 `#0057A3`와 옅은 배경 `#E8F2FC`는 이 포트폴리오의 가독성을 위해 선택한 파생색이다. 회사 로고 자체는 삽입하지 않는다.

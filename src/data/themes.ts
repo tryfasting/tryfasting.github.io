@@ -12,6 +12,14 @@ export const portfolioThemes = {
     accentInk: '#1A3FA6',
     accentSoft: '#E8EDFA',
   },
+  cj: {
+    label: 'CJ OliveNetworks Blue',
+    // Observed in the official website logo.svg and common.css, 2026-09-30.
+    accent: '#006ECD',
+    accentInk: '#0057A3',
+    accentSoft: '#E8F2FC',
+    marker: 'linear-gradient(90deg, #006ECD 0 60%, #EF141D 60% 80%, #FF9700 80% 100%)',
+  },
 } as const;
 
 export type PortfolioTheme = keyof typeof portfolioThemes;

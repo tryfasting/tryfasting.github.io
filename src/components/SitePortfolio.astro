@@ -10,7 +10,8 @@ const selectedProjects = profile.projectIds.map((id) => projects[id]);
 const selectedStudies = profile.studyIds.map((id) => studies[id]);
 const selectedLearnings = profile.learningIds.map((id) => learnings[id]);
 const canonical = new URL(`/${campaign.slug}/`, Astro.site ?? 'https://tryfasting.github.io');
-const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--accent-soft:${palette.accentSoft}`;
+const marker = 'marker' in palette ? palette.marker : palette.accent;
+const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--accent-soft:${palette.accentSoft};--accent-marker:${marker}`;
 ---
 <!doctype html>
 <html lang="ko">
