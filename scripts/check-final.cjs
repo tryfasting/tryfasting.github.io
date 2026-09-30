@@ -43,7 +43,7 @@ const { chromium } = createRequire(runtime)('playwright');
         const text = await page.locator('main').innerText();
         assert(!/\[이름\]|\[기관명\]|36\.6%|98\.4%/.test(text));
         // Claims not backed by apply/docs/FACTS.md or the practice EVIDENCE cards.
-        assert(!/FastAPI|F1 0\.78(?!8)|사전학습|LLM을 개발|이벤트 기반|파인튜닝|LoRA/.test(text), 'unsupported claim in page text');
+        assert(!/FastAPI|F1 0\.78(?!8)|사전학습|LLM을 개발|이벤트 기반|파인튜닝|LoRA|분류기|모든 요청|모든 문장을|라우터 경유|서비스 교정 기록/.test(text), 'unsupported claim in page text');
         assert.equal(await page.locator('#self-study .study').count(), 2);
         assert.equal(await page.locator('#learning .learning-card').count(), 3);
         assert.equal(await page.locator('#learning details').count(), 3);

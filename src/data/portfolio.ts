@@ -29,18 +29,18 @@ export interface Project {
 export const projects: Record<string, Project> = {
   smartrouter: {
     id: 'smartrouter', year: '2025', name: 'SmartRouter',
-    subtitle: '문장 난이도에 따른 LLM 라우팅',
-    role: '팀장 · 난이도 라벨 설계, 임계값·라우팅 설계, 교정 생성과 Judge 평가',
-    summary: '모든 문장을 같은 경량 모델에 보내던 한국어 문장 교정 서비스에서 출발했습니다. 교정 강도·문서 분야와 문장을 함께 입력해 난이도를 분류하고, 결과에 따라 경량·고성능 모델로 요청을 나누는 파이프라인을 만들었습니다.',
+    subtitle: '사용자 의도와 문장을 함께 보는 LLM 라우팅',
+    role: '팀장 · 학습 데이터 구축(메타데이터 역공학·난이도 라벨), 임계값·라우팅 설계, 교정 생성과 Judge 평가',
+    summary: '사용자가 고른 교정 강도·문서 분야와 상관없이 대부분의 요청이 경량 모델로 가던 한국어 문장 교정 서비스에서 출발했습니다. 강도·분야 태그와 문장을 함께 입력해 난이도를 판단하고, 결과에 따라 경량·고성능 모델로 요청을 나누는 라우팅 모델을 만들었습니다.',
     contribution: [
-      '정답이 없는 서비스 로그에서 원문·교정문 유사도를 역산하고, Gemini 채점으로 난이도 라벨을 설계했습니다.',
-      '팀원과 함께 klue/roberta-base 이진 분류기를 학습하고, 정밀도·재현율을 비교해 기본 라우팅 임계값을 0.25로 정했습니다.',
-      '경량 모델 단독·상위 모델 단독·라우터 경유 세 시나리오의 교정 결과를 LLM Judge로 비교했습니다.',
+      '서비스 로그가 약 1,000건뿐이라, 스타트업의 교정 문장 쌍 6,648건에 원문·교정문 유사도로 강도 태그를 역산해 붙이고 Gemini 채점으로 난이도 라벨을 만들었습니다.',
+      '팀원과 함께 klue/roberta-base 기반 라우팅 모델을 학습하고, 정밀도·재현율을 비교해 기본 라우팅 임계값을 0.25로 정했습니다.',
+      '경량 모델 단독·상위 모델 단독·라우팅 모델 경유 세 시나리오의 교정 결과를 LLM Judge로 비교했습니다.',
     ],
-    outcome: '분류 모델 F1 0.788(임계값 0.25)을 확인했고, 이어드림스쿨 스타트업 연계 프로젝트 장려상(3등)을 수상했습니다.',
-    limitation: '이후 AI 도구의 보조를 받아 재검증한 결과, 분류기 결정의 99.65%가 교정 강도 규칙과 같았습니다. 라벨이 강도 태그에서 만들어져 생긴 지름길 학습이었고, 모델 선택과 평가에 같은 test 분할을 쓴 한계도 함께 기록했습니다. 공개 저장소는 AI 보조로 재구성한 평가 감사본입니다.',
+    outcome: '라우팅 모델 F1 0.788(임계값 0.25)을 확인했고, 이어드림스쿨 스타트업 연계 프로젝트 장려상(3등)을 수상했습니다.',
+    limitation: '이후 학습 데이터를 다시 보니 강도별 난이도 분포가 크게 치우쳐 있었습니다(STRONG 약 72% Hard, WEAK 2%). AI 도구의 보조를 받아 재검증한 결과 모델 결정의 99.65%가 교정 강도 규칙과 같았습니다. 역산한 강도와 난이도 라벨이 같은 교정 결과에서 나와 생긴 태그 의존이었고, 모델 선택과 평가에 같은 test 분할을 쓴 한계도 함께 기록했습니다. 공개 저장소는 AI 보조로 재구성한 평가 감사본입니다.',
     stack: ['Python', 'PyTorch', 'Transformers', 'Pandas', 'Gemini API'],
-    metric: { value: '0.788', label: '분류 모델 F1' },
+    metric: { value: '0.788', label: '라우팅 모델 F1' },
     award: '이어드림스쿨 · 장려상(3등)',
     repository: 'https://github.com/tryfasting/yds-dmdp-smart-router',
     steps: ['강도·분야 + 문장', 'RoBERTa 난이도 분류', '경량 / 고성능 모델 선택'],
@@ -188,7 +188,7 @@ export const experience = [
 ];
 
 export const skills = [
-  { title: '모델 학습 · 평가', items: 'PyTorch / Transformers / scikit-learn', detail: '이진 분류기 학습, 정밀도·재현율과 임계값 분석, 소형 Causal LM 직접 조립' },
+  { title: '모델 학습 · 평가', items: 'PyTorch / Transformers / scikit-learn', detail: '라우팅 모델(이진 분류) 학습, 정밀도·재현율과 임계값 분석, 소형 Causal LM 직접 조립' },
   { title: '데이터 · 구현', items: 'Python / Pandas / 표준 라이브러리', detail: '서비스 로그 분석과 라벨 전처리, ctypes·tomllib·argparse 기반 CLI 도구' },
   { title: '현장 데이터 수집', items: 'Raspberry Pi / SPI / OpenCV', detail: '열화상 센서 통신, 이미지 수집과 데이터 구성' },
 ];
