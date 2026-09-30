@@ -42,7 +42,7 @@ const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--ac
         <section class="intro" aria-labelledby="name">
           <div class="identity">
             <div><p class="eyebrow">{campaign.label}</p><h1 id="name">{person.name}<span class="name-dot" aria-hidden="true">.</span></h1><p class="role">{person.role}</p></div>
-            <img class="portrait" src="/portrait-local.jpg" width="72" height="93" alt="유선종 프로필 사진" />
+            <img class="portrait" src="/portrait-local.jpg" width="96" height="124" alt="유선종 프로필 사진" />
           </div>
           <div class="identity-strip"><span>Python</span><span>Model evaluation</span><span>Data quality</span><a href={`mailto:${person.email}`}>{person.email} ↗</a></div>
           <div class="editorial-intro"><p class="section-kicker">01 / ABOUT</p><p class="statement">{profile.introduction.split('\n').map((line) => <span>{line}</span>)}</p></div>
