@@ -15,7 +15,7 @@ const { chromium } = createRequire(runtime)('playwright');
     const page = await browser.newPage({ deviceScaleFactor: 1 });
     page.on('pageerror', error => errors.push(error.message));
     page.on('requestfailed', request => errors.push(request.url()));
-    const accents = { hanwha: '#F37321', 'hanwha-ocean': '#F37321', 'cj-olivenetworks': '#006ECD', general: '#1F4FD1' };
+    const accents = { hanwha: '#F37321', 'hanwha-ocean': '#F37321', 'cj-olivenetworks': '#006ECD', 'naver-cloud': '#00C73C', general: '#1F4FD1' };
     const bodies = {};
     for (const campaign of Object.keys(accents)) {
       for (const width of [1440, 375]) {
@@ -72,7 +72,7 @@ const { chromium } = createRequire(runtime)('playwright');
     assert.deepEqual(errors, []);
     fs.writeFileSync(`${output}/validation.json`, JSON.stringify({ passed: true, results, errors }, null, 2));
     const cards = results.map(({ campaign, width }) => `<article><h2>${campaign} · ${width}px</h2><a href="${campaign}-${width}.png"><img src="${campaign}-${width}.png" alt="${campaign} ${width}px 전체 화면"></a></article>`).join('');
-    fs.writeFileSync(`${output}/index.html`, `<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>유선종 포트폴리오 dev 검수</title><style>body{font-family:system-ui;background:#f7f5f1;color:#16140f;margin:40px}a{color:#9c3a00}main{display:grid;grid-template-columns:2fr 1fr;gap:32px}img{width:100%;border:1px solid #ccc}h2{font-size:18px}@media(max-width:700px){main{display:block}}</style><h1>포트폴리오 dev 검수 (로컬 프리뷰)</h1><p><a href="${baseUrl}/hanwha/">hanwha</a> · <a href="${baseUrl}/hanwha-ocean/">hanwha-ocean</a> · <a href="${baseUrl}/cj-olivenetworks/">cj-olivenetworks</a> · <a href="${baseUrl}/general/">general</a> · <a href="validation.json">검증 결과</a></p><p>스크린샷은 상세 설명을 접은 상태입니다. 실제 화면에서 ‘구현 과정과 결과’를 펼쳐 볼 수 있습니다.</p><main>${cards}</main></html>`);
+    fs.writeFileSync(`${output}/index.html`, `<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>유선종 포트폴리오 dev 검수</title><style>body{font-family:system-ui;background:#f7f5f1;color:#16140f;margin:40px}a{color:#9c3a00}main{display:grid;grid-template-columns:2fr 1fr;gap:32px}img{width:100%;border:1px solid #ccc}h2{font-size:18px}@media(max-width:700px){main{display:block}}</style><h1>포트폴리오 dev 검수 (로컬 프리뷰)</h1><p><a href="${baseUrl}/hanwha/">hanwha</a> · <a href="${baseUrl}/hanwha-ocean/">hanwha-ocean</a> · <a href="${baseUrl}/cj-olivenetworks/">cj-olivenetworks</a> · <a href="${baseUrl}/naver-cloud/">naver-cloud</a> · <a href="${baseUrl}/general/">general</a> · <a href="validation.json">검증 결과</a></p><p>스크린샷은 상세 설명을 접은 상태입니다. 실제 화면에서 ‘구현 과정과 결과’를 펼쳐 볼 수 있습니다.</p><main>${cards}</main></html>`);
     console.log(JSON.stringify({ passed: true, screenshots: results.length }));
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

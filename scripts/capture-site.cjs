@@ -6,7 +6,7 @@ const runtime = path.join(process.env.USERPROFILE, '.cache/codex-runtimes/codex-
 const { chromium } = createRequire(runtime)('playwright');
 
 const [baseUrl = 'https://tryfasting.github.io', output = 'artifacts/main'] = process.argv.slice(2);
-const pages = ['', 'hanwha', 'hanwha-ocean', 'cj-olivenetworks', 'general'];
+const pages = ['', 'hanwha', 'hanwha-ocean', 'cj-olivenetworks', 'naver-cloud', 'general'];
 
 (async () => {
   fs.mkdirSync(output, { recursive: true });

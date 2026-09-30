@@ -38,3 +38,10 @@
 - 공식 [회사 소개](https://www.cjolivenetworks.co.kr/company/overview)의 [로고 SVG](https://www.cjolivenetworks.co.kr/images/common/logo.svg)에서 파랑 `#006ECD`, 빨강 `#EF141D`, 주황 `#FF9700`을 확인했다. 공식 [웹사이트 CSS](https://www.cjolivenetworks.co.kr/css/common.css)도 `#006ECD`를 사용한다. 이는 공식 웹 자산에서 확인한 값이며 별도의 전체 CI 매뉴얼 준수 인증을 뜻하지 않는다.
 - 파랑을 주 강조색으로, 세 가지 색은 96×5px 구분선 마커에만 사용한다. 본문 색과 편집 그리드는 유지한다.
 - 작은 글자용 `#0057A3`와 옅은 배경 `#E8F2FC`는 이 포트폴리오의 가독성을 위해 선택한 파생색이다. 회사 로고 자체는 삽입하지 않는다.
+
+## NAVER Cloud 테마 (2026-09-30)
+
+- URL: `/naver-cloud/`, 상단 표기: `NAVER CLOUD · HYPERCLOVA X DATA`.
+- 공식 [NAVER Cloud Platform](https://www.ncloud.com) 웹사이트의 번들 CSS에서 초록 `#00C73C`가 주색으로 쓰이는 것을 확인했다. 이는 공식 웹 자산에서 확인한 값이며 별도의 전체 CI 매뉴얼 준수 인증을 뜻하지 않는다.
+- 초록을 주 강조색과 구분선 마커에 쓰고 본문 색과 편집 그리드는 유지한다.
+- 작은 글자용 `#007A28`와 옅은 배경 `#E6F8EC`는 이 포트폴리오의 가독성을 위해 선택한 파생색이다. 회사 로고 자체는 삽입하지 않는다.

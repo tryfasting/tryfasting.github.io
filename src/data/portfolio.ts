@@ -179,6 +179,7 @@ export const campaigns: Record<string, Campaign> = {
   hanwha: { slug: 'hanwha', theme: 'hanwha', label: 'HANWHA FINANCE · AI / DATA' },
   'hanwha-ocean': { slug: 'hanwha-ocean', theme: 'hanwha', label: 'HANWHA OCEAN · AX' },
   'cj-olivenetworks': { slug: 'cj-olivenetworks', theme: 'cj', label: 'CJ OLIVENETWORKS · AI / DATA' },
+  'naver-cloud': { slug: 'naver-cloud', theme: 'naver', label: 'NAVER CLOUD · HYPERCLOVA X DATA' },
   general: { slug: 'general', theme: 'cobalt', label: 'AI / LLM ENGINEERING', indexable: true },
 };
 

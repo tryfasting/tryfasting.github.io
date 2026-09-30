@@ -20,6 +20,13 @@ export const portfolioThemes = {
     accentSoft: '#E8F2FC',
     marker: 'linear-gradient(90deg, #006ECD 0 60%, #EF141D 60% 80%, #FF9700 80% 100%)',
   },
+  naver: {
+    label: 'NAVER Cloud Green',
+    // Dominant green in the official www.ncloud.com bundled CSS, observed 2026-09-30.
+    accent: '#00C73C',
+    accentInk: '#007A28',
+    accentSoft: '#E6F8EC',
+  },
 } as const;
 
 export type PortfolioTheme = keyof typeof portfolioThemes;
