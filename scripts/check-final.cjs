@@ -15,7 +15,7 @@ const { chromium } = createRequire(runtime)('playwright');
     const page = await browser.newPage({ deviceScaleFactor: 1 });
     page.on('pageerror', error => errors.push(error.message));
     page.on('requestfailed', request => errors.push(request.url()));
-    const accents = { hanwha: '#F37321', 'hanwha-ocean': '#F37321', 'cj-olivenetworks': '#006ECD', 'naver-cloud': '#00C73C', general: '#1F4FD1' };
+    const accents = { hanwha: '#F37321', 'hanwha-ocean': '#ED7100', 'cj-olivenetworks': '#006ECD', 'naver-cloud': '#00C73C', general: '#1F4FD1' };
     const bodies = {};
     for (const campaign of Object.keys(accents)) {
       for (const width of [1440, 375]) {
