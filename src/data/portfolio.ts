@@ -180,6 +180,7 @@ export const campaigns: Record<string, Campaign> = {
   'hanwha-ocean': { slug: 'hanwha-ocean', theme: 'hanwhaOcean', label: 'HANWHA OCEAN · AX' },
   'cj-olivenetworks': { slug: 'cj-olivenetworks', theme: 'cj', label: 'CJ OLIVENETWORKS · AI / DATA' },
   'naver-cloud': { slug: 'naver-cloud', theme: 'naver', label: 'NAVER CLOUD · HYPERCLOVA X DATA' },
+  'db-group': { slug: 'db-group', theme: 'db', label: 'DB GROUP · AI / DATA' },
   general: { slug: 'general', theme: 'cobalt', label: 'AI / LLM ENGINEERING', indexable: true },
 };
 

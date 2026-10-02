@@ -35,6 +35,14 @@ export const portfolioThemes = {
     accentInk: '#007A28',
     accentSoft: '#E6F8EC',
   },
+  db: {
+    label: 'DB Group Green',
+    // DB Group CI manual: ci.dbgroup.co.kr/ci-manual/color-usage, 2026-10-02.
+    accent: '#00854A',
+    accentInk: '#006638',
+    accentSoft: '#E8F4EC',
+    marker: 'linear-gradient(90deg, #00854A 0 60%, #F15A22 60% 80%, #0588CB 80% 100%)',
+  },
 } as const;
 
 export type PortfolioTheme = keyof typeof portfolioThemes;
