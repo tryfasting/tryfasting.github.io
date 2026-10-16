@@ -4,8 +4,8 @@
 - 재실행: 프로젝트 루트에서 `powershell -ExecutionPolicy Bypass -File scripts/start-preview.ps1`
 - 일반 Node/npm 환경: `npm install` → `npm run dev`
 - 빌드: `npm run build` → `dist/`에 정적 사이트 출력
-- 색상·폰트: `src/styles/global.css`의 `@theme`
-- 샘플 섹션: `src/components/` / 조립: `src/pages/index.astro`
+- 색상·테마: `src/data/themes.ts` / 페이지 스타일·폰트: `src/styles/site.css` (이전 `global.css`는 2026-10-16 삭제)
+- 페이지 구조: `src/components/SitePortfolio.astro` / 조립: `src/pages/index.astro`, `src/pages/[company]/index.astro`
 - [템플릿 출처와 수정 범위](../TEMPLATE_NOTES.md)
 
 현재 환경은 기존 Codex Node 런타임과 프로젝트 내부 npm(`.tools/npm/package/bin/npm-cli.js`)을 사용합니다. 전역 설치는 하지 않았습니다. Astro 실행 시 `ASTRO_TELEMETRY_DISABLED=1`을 설정해 작업 폴더 밖의 설정 파일 생성을 방지합니다. 재실행 스크립트가 이를 설정합니다.

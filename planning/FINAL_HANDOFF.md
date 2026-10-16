@@ -49,7 +49,7 @@
 | 회사별 정적 URL 생성 | `src/pages/[company]/index.astro` |
 | 기본 주소 | `src/pages/index.astro` |
 
-`global.css`, `experiments.css`, `refined.css`는 이전 실험용이다. 최종 페이지는 `site.css`를 사용한다.
+최종 페이지는 `site.css`만 사용한다. 이전 실험용 `global.css`, `experiments.css`, `refined.css`와 `/experiments/*` 페이지·레이아웃·컴포넌트·캡처 스크립트, Tailwind·fontsource 패키지는 2026-10-16에 삭제했다.
 
 새 회사는 `campaigns`에 `{ slug, theme, label }` 한 줄만 추가한다(예: `'hanwha-ocean': { slug: 'hanwha-ocean', theme: 'hanwha', label: 'HANWHA OCEAN · AX' }`). 본문 문구는 모든 회사 페이지가 `profile`과 각 프로젝트의 `nextStep`을 공유하며, 회사별 소개문을 따로 쓰지 않는다(2026-09-30 사용자 결정 — 원고가 늘면 헷갈림). `check-final.cjs`가 캠페인 간 본문 일치를 검사하므로 새 slug도 `accents`에 추가한다. 회사 페이지에는 noindex가 붙고, `indexable: true`인 `/general/`만 검색 색인을 허용한다. 이미 제출한 주소의 slug(`hanwha` = 한화금융)는 바꾸지 않는다. 새로운 색상이면 `portfolioThemes`에도 추가한다. 빌드하면 `/{slug}/index.html`이 생성되어 직접 접속·새로고침이 된다. 별도 FastAPI, 데이터베이스, 클라이언트 라우터가 필요 없다. 회사별 페이지는 모두 공개 URL이며 접근제한 기능이 아니다.
 
@@ -67,7 +67,7 @@
 
 ## 검증 및 배포
 
-`npm run build`로 루트·등록된 모든 캠페인·404의 정적 HTML을 생성한다. 실험 페이지는 배포 빌드에서 제외된다.
+`npm run build`로 루트·등록된 모든 캠페인·404의 정적 HTML을 생성한다.
 
 미리보기 서버를 실행한 뒤 `node scripts/check-final.cjs`로 모든 등록 캠페인의 1440px·375px 화면, 이미지 로딩, 가로 넘침, 회사별 색상과 canonical, 이메일과 저장소 주소, 상세 펼치기와 키보드 닫기, 연락 앵커, 잘못된 URL의 404를 확인한다. 이 스크립트는 현재 환경에 제공된 Playwright 런타임을 사용한다.
 
