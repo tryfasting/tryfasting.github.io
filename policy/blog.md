@@ -23,7 +23,7 @@
 
 - **표준 마크다운만** 쓴다. Obsidian `[[위키링크]]`, `![[임베드]]`는 쓰지 않는다.
 - 이미지는 글과 같은 폴더의 `images/`에 두고 상대 경로로 참조한다: `![설명](./images/그림.png)`
-- 파일명: `YYYY-MM-DD-영문-kebab-case.md` (소문자·숫자·하이픈만, 한글 파일명 금지)
+- 파일명: `YYYY-MM-DD-영문-kebab-case.md` (소문자·숫자·하이픈만, 한글 파일명 금지). 날짜를 뺀 부분이 이 규칙에 맞지 않으면 빌드가 실패한다. `tags`는 예약어라 슬러그로 쓸 수 없다.
 - frontmatter (빌드 시 검증, 필수 항목이 없거나 형식이 틀리면 빌드 실패)
 
   ```yaml
@@ -41,8 +41,8 @@
 ## 폴더와 URL
 
 - 폴더 깊이는 최대 2단계로 정리한다: `posts/` 안에 주제 폴더 1단계, 그 안에 `images/`까지.
-  - 허용: `posts/첫글.md`, `posts/python/글.md`, `posts/python/images/그림.png`
-  - 쓰지 않음: `posts/python/basics/글.md`
+  - 허용: `posts/2026-10-16-first-post.md`, `posts/python/2026-10-20-uv-basics.md`, `posts/python/images/그림.png`
+  - 쓰지 않음: `posts/python/basics/2026-10-20-uv-basics.md`
   - 이 규칙은 운영 습관이며 빌드에서 강제하지 않는다.
 - **URL은 폴더와 무관하다.** 슬러그 = 파일명에서 날짜 접두사(`YYYY-MM-DD-`)를 뺀 값. 예: `posts/python/2026-10-20-uv-basics.md` → `/blog/uv-basics/`
   - 글을 다른 주제 폴더로 옮겨도 URL은 바뀌지 않는다.

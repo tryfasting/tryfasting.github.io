@@ -1,0 +1,32 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const siteName = '유선종 블로그';
+const pageTitle = title === siteName ? title : `${title} — ${siteName}`;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip" href="#main">본문으로 건너뛰기</a>
+    <header class="blog-header">
+      <a class="blog-home" href="/blog/">{siteName}</a>
+      <nav aria-label="블로그 메뉴"><a href="/blog/">글 목록</a></nav>
+    </header>
+    <main id="main" class="blog-main">
+      <slot />
+    </main>
+    <footer class="blog-footer">
+      <p>© {new Date().getFullYear()} 유선종</p>
+    </footer>
+  </body>
+</html>
