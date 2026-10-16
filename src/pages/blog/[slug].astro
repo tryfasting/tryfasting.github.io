@@ -14,7 +14,7 @@ interface Props {
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
-<BlogLayout title={post.data.title} description={post.data.description}>
+<BlogLayout title={post.data.title} description={post.data.description} publishedTime={post.data.date} tags={post.data.tags}>
   <article class="post">
     <header class="post-header">
       <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
