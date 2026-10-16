@@ -1,4 +1,9 @@
 ---
+import 'pretendard/dist/web/variable/pretendardvariable.css';
+import '@fontsource-variable/source-serif-4/wght.css';
+import '@fontsource/noto-serif-kr/400.css';
+import './blog.css';
+
 interface Props {
   title: string;
   description: string;
@@ -6,6 +11,7 @@ interface Props {
 const { title, description } = Astro.props;
 const siteName = '유선종 블로그';
 const pageTitle = title === siteName ? title : `${title} — ${siteName}`;
+const isList = Astro.url.pathname === '/blog/';
 ---
 <!doctype html>
 <html lang="ko">
@@ -13,6 +19,7 @@ const pageTitle = title === siteName ? title : `${title} — ${siteName}`;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#f8f8f6" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{pageTitle}</title>
   </head>
@@ -20,13 +27,20 @@ const pageTitle = title === siteName ? title : `${title} — ${siteName}`;
     <a class="skip" href="#main">본문으로 건너뛰기</a>
     <header class="blog-header">
       <a class="blog-home" href="/blog/">{siteName}</a>
-      <nav aria-label="블로그 메뉴"><a href="/blog/">글 목록</a></nav>
+      <nav aria-label="블로그 메뉴">
+        <a href="/blog/" aria-current={isList ? 'page' : undefined}>글 목록</a>
+      </nav>
     </header>
     <main id="main" class="blog-main">
       <slot />
     </main>
     <footer class="blog-footer">
-      <p>© {new Date().getFullYear()} 유선종</p>
+      <div class="blog-footer-inner">
+        <nav aria-label="바깥 링크">
+          <a href="https://github.com/tryfasting" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        </nav>
+        <p>© {new Date().getFullYear()} 유선종</p>
+      </div>
     </footer>
   </body>
 </html>
