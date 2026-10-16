@@ -7,6 +7,10 @@ dist/
 .env.*
 *.bak
 
+# Blog: Obsidian vault settings and unpublished drafts
+.obsidian/
+posts/_drafts/
+
 # Agent artifacts and prompts
 artifacts/
 prompt/

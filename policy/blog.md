@@ -48,6 +48,39 @@
 
 - 공개 레포이므로 커밋된 `draft: true` 글은 사이트에는 안 보여도 GitHub 소스에서는 보인다. 공개 전 글은 `posts/_drafts/`에 둔다.
 
+## 글 쓰고 올리기
+
+### Obsidian
+
+처음 한 번 설정한다 (`posts/`를 볼트로 연다. `posts/.obsidian/`은 Git에서 제외된다).
+
+| 설정 위치 | 값 |
+|---|---|
+| Core plugins → Templates | 켜기. Template folder location: `_templates` |
+| Files and links → Default location for new attachments | In subfolder under current folder, Subfolder name: `images` |
+| Files and links → New link format | Relative path to file |
+| Files and links → Use [[Wikilinks]] | 끄기 |
+
+글 쓰는 순서
+
+1. 주제 폴더(또는 `posts/` 바로 아래)에 새 노트를 `YYYY-MM-DD-영문-kebab-case` 이름으로 만든다.
+2. 명령 팔레트 → "Templates: Insert template" → `blog-post`.
+3. `title`(파일명이 들어가 있음)과 `description`, `tags`를 고쳐 쓴다.
+4. 이미지는 붙여 넣으면 같은 폴더의 `images/`에 저장되고 표준 링크로 들어간다. 파일명에 공백이 있어도 된다.
+5. 저장 후 `main`에 push한다.
+
+공개 전 글은 `posts/_drafts/`에 두었다가 공개할 때 주제 폴더로 옮긴다.
+
+### VS Code
+
+1. `posts/` 안에 `YYYY-MM-DD-영문-kebab-case.md` 파일을 만든다.
+2. `Ctrl+Shift+P` → "Insert Snippet" → "Blog post" (또는 `post` 입력 후 `Ctrl+Space`). 날짜는 오늘로 채워진다.
+3. 이미지는 같은 폴더의 `images/`에 넣고 `![설명](./images/파일.png)`로 참조한다.
+
+### push 전 확인 (선택)
+
+`npm run build`가 통과하면 배포도 통과한다.
+
 ## 폴더와 URL
 
 - 폴더 깊이는 최대 2단계로 정리한다: `posts/` 안에 주제 폴더 1단계, 그 안에 `images/`까지.
@@ -75,8 +108,9 @@
 ## 배포가 실패하면
 
 1. GitHub Actions 로그에서 frontmatter 오류(필수 항목 누락, 날짜 형식)를 확인한다.
-2. 슬러그 중복 오류인지 확인한다 (겹친 경로가 로그에 나온다).
-3. 그다음 사진 복원 단계(Secrets) 오류인지 확인한다.
+2. 슬러그 오류(중복·형식)인지 확인한다 (`Blog post slug check failed`, 겹친 경로가 로그에 나온다).
+3. 이미지 경로 오류인지 확인한다 (`ImageNotFound`: 링크한 이미지 파일이 없거나 경로가 틀림).
+4. 그다음 사진 복원 단계(Secrets) 오류인지 확인한다.
 
 로컬에서 먼저 확인하려면 `npm run build`를 실행한다.
 
