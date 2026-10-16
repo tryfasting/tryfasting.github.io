@@ -45,6 +45,7 @@ const isList = Astro.url.pathname === '/blog/';
       <a class="blog-home" href="/blog/">{blogTitle}</a>
       <nav aria-label="블로그 메뉴">
         <a href="/blog/" aria-current={isList ? 'page' : undefined}>글 목록</a>
+        <a href="/general/">포트폴리오</a>
       </nav>
     </header>
     <main id="main" class="blog-main">

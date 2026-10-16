@@ -40,6 +40,10 @@ const { chromium } = createRequire(runtime)('playwright');
         assert.equal(await page.locator('h1').textContent(), '유선종.');
         assert.equal(await page.locator('a[href="https://github.com/tryfasting/yds-dmdp-smart-router"]').count(), 1);
         assert.equal(await page.locator('a[href="mailto:2015111004@yonsei.ac.kr"]').count(), 2);
+        // Every campaign shares the same header link to the blog.
+        assert.equal(await page.locator('header nav a[href="/blog/"]').count(), 1);
+        assert.equal((await page.locator('header nav a[href="/blog/"]').innerText()).trim(), '블로그');
+        assert(await page.locator('header nav a[href="/blog/"]').isVisible());
         // textContent includes collapsed details; keep those claims under the same checks.
         const text = (await page.locator('main').textContent()).replace(/\s+/g, ' ').trim();
         assert(!/\[이름\]|\[기관명\]|36\.6%|98\.4%/.test(text));
@@ -69,6 +73,14 @@ const { chromium } = createRequire(runtime)('playwright');
     assert.equal(await page.locator('.eyebrow').innerText(), 'HANWHA FINANCE · AI / DATA');
     assert.equal((await page.goto(`${baseUrl}/unknown-company/`)).status(), 404);
     assert.equal((await page.goto(`${baseUrl}/experiments/d-document/`)).status(), 404);
+    // Blog: reachable, links back to the general portfolio, no horizontal overflow.
+    for (const width of [1440, 375]) {
+      await page.setViewportSize({ width, height: 1000 });
+      assert.equal((await page.goto(`${baseUrl}/blog/`, { waitUntil: 'networkidle' })).status(), 200);
+      assert.equal(await page.locator('header nav a[href="/general/"]').count(), 1);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+      await page.screenshot({ path: `${output}/blog-${width}.png`, fullPage: true });
+    }
     assert.deepEqual(errors, []);
     fs.writeFileSync(`${output}/validation.json`, JSON.stringify({ passed: true, results, errors }, null, 2));
     const cards = results.map(({ campaign, width }) => `<article><h2>${campaign} · ${width}px</h2><a href="${campaign}-${width}.png"><img src="${campaign}-${width}.png" alt="${campaign} ${width}px 전체 화면"></a></article>`).join('');
