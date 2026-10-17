@@ -1,6 +1,6 @@
 # 최종 구현 및 운영 안내
 
-기업별 디자인 작업의 기준: [company-pages.md](../policy/company-pages.md). 에이전트 진입 안내는 루트 [AGENTS.md](../AGENTS.md)에 있다.
+기업별 디자인 작업의 기준: [company-pages.md](../policy/company-pages.md). 에이전트 진입 안내는 루트 [AGENTS.md](../AGENTS.md), 도메인 전체 구조(포트폴리오·블로그 두 저장소, Actions, Pages)는 [ARCHITECTURE.md](../ARCHITECTURE.md)에 있다.
 
 ## 후속 수정: 가독성·이니셜·사진
 
