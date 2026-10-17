@@ -1,5 +1,7 @@
 # 템플릿 출처와 수정 범위
 
+> **과거 기록 (2026-10-17 보관).** 현재 기준이 아니다. 현재 운영 기준은 [운영 안내](../FINAL_HANDOFF.md)와 [기업별 페이지 원칙](../../policy/company-pages.md)이다. 이 문서 안의 상대 링크는 옮기기 전 위치 기준이라 열리지 않을 수 있다.
+
 - 원본: https://github.com/michael-andreuzza/swissfolio
 - 제작자: Lexington Themes / Michael Andreuzza
 - 원본 GPL-3.0 라이선스는 루트 LICENSE에 보존했습니다.

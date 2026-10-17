@@ -29,7 +29,7 @@
 
 | 폴더 | 뜻 | 만드는 방법 |
 |---|---|---|
-| `dev/` | 0 · 로컬 프리뷰(배포 전) 검증 화면 | `node scripts/check-final.cjs` (검증 + `index.html`, `validation.json`) |
+| `dev/` | 0 · 로컬 프리뷰(배포 전) 검증 화면 | `npm run verify` (검증 + `index.html`, `validation.json`) |
 | `main/` | 1 · 현재 운영 사이트 화면 | `scripts/rotate-artifacts.ps1` 안에서 `capture-site.cjs` 실행 |
 | `main-prev/` | -1 · 직전 배포본 화면 | 배포 후 `rotate-artifacts.ps1`이 기존 `main/`을 옮김 |
 
@@ -69,6 +69,8 @@
 
 `npm run build`로 루트·등록된 모든 캠페인·404의 정적 HTML을 생성한다.
 
-미리보기 서버를 실행한 뒤 `node scripts/check-final.cjs`로 모든 등록 캠페인의 1440px·375px 화면, 이미지 로딩, 가로 넘침, 회사별 색상과 canonical, 이메일과 저장소 주소, 상세 펼치기와 키보드 닫기, 연락 앵커, 상단 블로그 링크(`/blog/`)와 블로그의 포트폴리오 링크, 잘못된 URL의 404를 확인한다. 블로그 운영은 [블로그 운영 규칙](../policy/blog.md)을 따른다. 이 스크립트는 현재 환경에 제공된 Playwright 런타임을 사용한다.
+`npm run preview`(포트 4326)로 미리보기 서버를 실행한 뒤 `npm run verify`(`scripts/check-final.cjs`)로 모든 등록 캠페인의 1440px·375px 화면, 이미지 로딩, 가로 넘침, 회사별 색상과 canonical, 이메일과 저장소 주소, 상세 펼치기와 키보드 닫기, 연락 앵커, 상단 블로그 링크(`/blog/`), 잘못된 URL의 404를 확인한다. 운영 사이트는 `npm run verify -- https://tryfasting.github.io <출력 폴더>`로 같은 검사를 한다. 이 스크립트는 저장소의 devDependency인 Playwright와 시스템 Chrome을 사용한다.
+
+블로그(`/blog/`)는 2026-10-17부터 별개 저장소 `tryfasting/blog`에서 배포한다. 이 저장소는 `/blog` 경로를 만들지 않는다.
 
 최초 배포(`b477cc8`, Actions `35608385109`)는 2026-09-21에 검증됐다. 이후 배포에서는 위 순환 규칙을 따른다. `main-prev/`는 항상 직전 운영본을 뜻하며 최초 배포본으로 고정하지 않는다. OG 제목·설명은 설정되어 있으며 별도 공유 카드 이미지는 아직 없다.

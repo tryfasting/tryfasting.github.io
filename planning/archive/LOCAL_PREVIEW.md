@@ -1,5 +1,7 @@
 # 로컬 미리보기
 
+> **과거 기록 (2026-10-17 보관).** 현재 기준이 아니다. 현재 운영 기준은 [운영 안내](../FINAL_HANDOFF.md)와 [기업별 페이지 원칙](../../policy/company-pages.md)이다. 이 문서 안의 상대 링크는 옮기기 전 위치 기준이라 열리지 않을 수 있다.
+
 - 현재 주소: http://127.0.0.1:4321
 - 재실행: 프로젝트 루트에서 `powershell -ExecutionPolicy Bypass -File scripts/start-preview.ps1`
 - 일반 Node/npm 환경: `npm install` → `npm run dev`

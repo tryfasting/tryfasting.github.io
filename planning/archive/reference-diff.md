@@ -1,5 +1,7 @@
 # Swissfolio 원본 레퍼런스 실측치 비교 분석 (Reference Diff)
 
+> **과거 기록 (2026-10-17 보관).** 현재 기준이 아니다. 현재 운영 기준은 [운영 안내](../FINAL_HANDOFF.md)와 [기업별 페이지 원칙](../../policy/company-pages.md)이다. 이 문서 안의 상대 링크는 옮기기 전 위치 기준이라 열리지 않을 수 있다.
+
 이 문서는 `swissfolio-reference` 원본 소스 코드(`Text.astro`, `Wrapper.astro`, `landing/*.astro`, `global.css`)를 직접 측정 및 분석하여 현재 프로젝트(v1.3)의 수치와 비교한 사실적 근거 표이다. 아래 수치는 v1.4 병렬 변량(Variant A, B, C) 실험의 정량적 기준선이 된다.
 
 ---
