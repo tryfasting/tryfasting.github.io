@@ -4,7 +4,7 @@ const path = require('node:path');
 const { chromium } = require('playwright');
 
 const [baseUrl = 'https://tryfasting.github.io', output = 'artifacts/main'] = process.argv.slice(2);
-const pages = ['', 'hanwha', 'hanwha-ocean', 'cj-olivenetworks', 'naver-cloud', 'db-group', 'general', 'blog'];
+const pages = ['', 'hanwha', 'hanwha-ocean', 'cj-olivenetworks', 'naver-cloud', 'db-group', 'general'];
 
 (async () => {
   fs.mkdirSync(output, { recursive: true });
