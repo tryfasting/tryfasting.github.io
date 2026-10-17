@@ -52,6 +52,9 @@ jobs:
           Path('public/portrait-local.jpg').write_bytes(photo)
           PY
 
+      - name: Type check
+        run: npm run check
+
       - name: Build with Astro
         run: npm run build
 

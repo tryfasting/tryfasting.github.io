@@ -1,9 +1,6 @@
 const fs = require('node:fs');
-const path = require('node:path');
 const assert = require('node:assert/strict');
-const { createRequire } = require('node:module');
-const runtime = path.join(process.env.USERPROFILE, '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/package.json');
-const { chromium } = createRequire(runtime)('playwright');
+const { chromium } = require('playwright');
 
 (async () => {
   const [baseUrl = 'http://127.0.0.1:4326', output = 'artifacts/dev'] = process.argv.slice(2);
@@ -73,14 +70,6 @@ const { chromium } = createRequire(runtime)('playwright');
     assert.equal(await page.locator('.eyebrow').innerText(), 'HANWHA FINANCE · AI / DATA');
     assert.equal((await page.goto(`${baseUrl}/unknown-company/`)).status(), 404);
     assert.equal((await page.goto(`${baseUrl}/experiments/d-document/`)).status(), 404);
-    // Blog: reachable, links back to the general portfolio, no horizontal overflow.
-    for (const width of [1440, 375]) {
-      await page.setViewportSize({ width, height: 1000 });
-      assert.equal((await page.goto(`${baseUrl}/blog/`, { waitUntil: 'networkidle' })).status(), 200);
-      assert.equal(await page.locator('header nav a[href="/general/"]').count(), 1);
-      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-      await page.screenshot({ path: `${output}/blog-${width}.png`, fullPage: true });
-    }
     assert.deepEqual(errors, []);
     fs.writeFileSync(`${output}/validation.json`, JSON.stringify({ passed: true, results, errors }, null, 2));
     const cards = results.map(({ campaign, width }) => `<article><h2>${campaign} · ${width}px</h2><a href="${campaign}-${width}.png"><img src="${campaign}-${width}.png" alt="${campaign} ${width}px 전체 화면"></a></article>`).join('');

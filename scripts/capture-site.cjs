@@ -1,9 +1,7 @@
 // Screenshot-only capture of a deployed site: node scripts/capture-site.cjs <baseUrl> <outDir>
 const fs = require('node:fs');
 const path = require('node:path');
-const { createRequire } = require('node:module');
-const runtime = path.join(process.env.USERPROFILE, '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/package.json');
-const { chromium } = createRequire(runtime)('playwright');
+const { chromium } = require('playwright');
 
 const [baseUrl = 'https://tryfasting.github.io', output = 'artifacts/main'] = process.argv.slice(2);
 const pages = ['', 'hanwha', 'hanwha-ocean', 'cj-olivenetworks', 'naver-cloud', 'db-group', 'general', 'blog'];
