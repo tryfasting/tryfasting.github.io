@@ -43,6 +43,13 @@ export const portfolioThemes = {
     accentSoft: '#E8F4EC',
     marker: 'linear-gradient(90deg, #00854A 0 60%, #F15A22 60% 80%, #0588CB 80% 100%)',
   },
+  skAigen: {
+    label: 'SK AIGEN Orange & Red',
+    accent: '#F37321',
+    accentInk: '#9C3A00',
+    accentSoft: '#FBE9DC',
+    marker: 'linear-gradient(90deg, #EA002C 0 45%, #F37321 45% 100%)',
+  },
 } as const;
 
 export type PortfolioTheme = keyof typeof portfolioThemes;

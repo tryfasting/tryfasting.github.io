@@ -1,0 +1,259 @@
+---
+import 'pretendard/dist/web/variable/pretendardvariable.css';
+import '../../styles/site.css';
+import { person, projects, learnings } from '../../data/portfolio';
+import { portfolioThemes } from '../../data/themes';
+
+const palette = portfolioThemes.skAigen;
+const canonical = new URL('/sk-aigen/', Astro.site ?? 'https://tryfasting.github.io');
+const theme = `--accent:${palette.accent};--accent-ink:${palette.accentInk};--accent-soft:${palette.accentSoft};--accent-marker:${palette.marker}`;
+
+const aigenProjects = [
+  {
+    id: 'smartrouter',
+    year: '2025',
+    name: 'SmartRouter',
+    subtitle: '사용자 의도와 문장을 함께 보는 문장 교정 라우팅 (문항 3 관련)',
+    role: '팀장 (4인 팀) · 데이터 구축(강도 태그 역산·난이도 라벨), 모델 학습·임계값 설계, 발표',
+    summary: '사용자가 고른 교정 강도·분야와 상관없이 대부분의 요청이 경량 모델로만 배정되던 한국어 문장 교정 서비스에서 출발했습니다. 수료 필수 과정에 무작위 배정된 팀에서 참여 온도 차이를 겪었지만, 불필요한 감정 소모 대신 매주 현직자 멘토링과 주말 작업 공유에 솔선수범하며 팀원의 자발적 협력을 이끌어냈습니다.',
+    contribution: [
+      '서비스 로그가 1,053건뿐이라, 스타트업의 교정 문장 쌍 6,648건에 원문·교정문 유사도로 강도 태그를 역산해 붙이고 Gemini 채점으로 난이도 라벨을 구축했습니다.',
+      '구축한 약 7,700건 데이터로 klue/roberta-base 기반 라우팅 모델을 학습하고, 정밀도·재현율을 비교해 기본 임계값을 0.25로 설계했습니다.',
+      '석사 출신 팀원에게 연구 경험과 발표 방향성을 적극 질문하고 조언을 구해 발표 대본과 PPT 완성도를 높였습니다.',
+    ],
+    outcome: '이어드림스쿨 스타트업 연계 프로젝트 장려상(3등)을 수상했습니다.',
+    limitation: '종료 후 학습 데이터를 다시 점검한 결과, 강도별 난이도 분포가 크게 치우쳐 있었고(STRONG 약 72% Hard, WEAK 2%), AI 도구 보조로 재검증해 모델 결정이 문장 내용보다 강도 태그에 의존한 지름길 학습 한계를 확인·기록했습니다.',
+    stack: ['Python', 'PyTorch', 'Transformers', 'Pandas', 'Gemini API'],
+    metric: { value: '장려상', label: '이어드림스쿨 3등' },
+    award: '이어드림스쿨 스타트업 연계 프로젝트 · 장려상(3등)',
+    repository: 'https://github.com/tryfasting/yds-dmdp-smart-router',
+    steps: ['강도·분야 + 원문 결합', '난이도 분류 및 라우팅', '사후 데이터 편향 재검증'],
+    nextStep: '생각이 다른 동료와도 내가 먼저 솔선수범할 때 협력이 열린다는 점과, 좋은 지표 뒤의 데이터 편향까지 끝까지 의심하는 태도를 배웠습니다.',
+  },
+  projects.defect,
+];
+
+const aigenChallenges = [
+  {
+    id: 'ghostwriter',
+    period: '2026 · 문항 4 관련',
+    name: 'GhostWriter',
+    subtitle: '글쓴이의 문체를 지키는 제안형 자동완성 편집기',
+    summary: '사람의 글쓰기를 돕되 문체를 해치지 않는 도구를 만들고 싶었습니다. 장기 목표를 한 번에 이루기보다 가능한 것부터 해 보려고, 반복 표현이 뚜렷한 공문서 자동완성을 첫 징검다리로 삼아 편집기 틀부터 직접 만들어 보았습니다.',
+    built: [
+      '코딩 도구의 Copilot처럼 커서 뒤에 다음 표현을 회색 글씨로 제안하고, 글쓴이가 마음에 들 때만 선택(Tab)해 넣는 편집기 화면(PySide6)을 만들었습니다.',
+      '서버 비용 없이 돌려보려고 일반 PC용 경량 모델(Qwen2.5 1.5B)을 연결했으나, 앞 문맥을 놓치고 한국어 문장 중간에 중국어·한자를 출력하는 문제를 확인했습니다.',
+    ],
+    verified: '경량 모델로는 원하는 표현 품질이 나오지 않음을 확인하고 중단한 프로토타입입니다.',
+    limitation: '이 실패를 통해 먼저 고성능 프론티어 모델로 제안형 편집기 MVP를 완성해 쓰임새를 검증하고, 이후에 모델을 경량화·자체 구축해 갈아끼우는 단계적 접근이 현실적임을 배웠습니다.',
+    stack: ['Python', 'PySide6', 'llama-cpp-python', 'Qwen2.5 1.5B'],
+  },
+  {
+    id: 'makesubs',
+    period: '2026 · 진행 중 (문항 2 관련)',
+    name: 'makesubs',
+    subtitle: '강의 영상 자막 생성·검수 범용 파이프라인',
+    summary: '안드레이 카파시의 무료 강의 Zero to Hero에서 큰 도움을 받고, 다른 외국어 번역의 기반이 될 고품질 영어·한국어 자막을 배포하고자 시작했습니다. 처음에는 이 강의 하나만 만들려는 좁은 시각으로 에이전트에게 개발을 요청했다가 수정·점검이 막히자, 일반화와 재사용성 원칙을 적용해 구조를 전면 재설계했습니다.',
+    built: [
+      '특정 강의 고유의 규칙과 용어는 별도 프로필 설정(YAML)으로 분리하고, 자막 생성과 검수의 각 단계가 독립적으로 동작하도록 구조를 다시 잡았습니다.',
+      '일곱 번째 강의(Let\'s build GPT, 약 2시간 분량)의 음성 인식, 초안 생성, 타이밍 정렬, 자동 검수까지 마치고 마지막 사람의 검토 단계를 남겨두고 있습니다.',
+    ],
+    verified: '구조 개편 후 문제가 생긴 단계만 독립적으로 점검·수정할 수 있음을 확인했습니다.',
+    limitation: '현재 7강 자막 생성 과정을 마쳤으며, 최종 배포 전 사람의 직접 검토(review) 단계에 있습니다.',
+    stack: ['Python', 'whisper.cpp', 'MMS Align', 'LLM Audit'],
+  },
+  {
+    id: 'korean-char-lm',
+    period: '2026.09 · 원리 탐색 (문항 4 관련)',
+    name: 'korean-char-lm',
+    subtitle: '글자 단위 언어모델의 다음 글자 예측 원리 구현',
+    summary: '글쓰기에서 오래 고민하던 "문맥에 맞는 다음 단어 고르기"가 언어모델에서 어떻게 작동하는지 코드로 확인하려고, PyTorch 표준 모듈로 한국어 글자 단위 Causal LM을 직접 조립해 학습·생성 과정을 이어 봤습니다.',
+    built: [
+      '한국어 글자 사전과 encode/decode, 시퀀스 데이터셋을 구성했습니다.',
+      'nn.MultiheadAttention과 causal mask로 앞선 문맥을 바탕으로 다음 글자의 확률을 계산하는 구조를 직접 조립하고 학습했습니다.',
+      '체크포인트를 저장하고 다시 불러와 앞선 문맥에 이어지는 다음 글자를 생성하는 과정을 확인했습니다.',
+    ],
+    verified: '첫 학습 Loss가 이론치 ln(어휘 크기) 근처인지 대조해 초기화와 손실 계산을 점검했습니다.',
+    limitation: '소형 문학 텍스트로 원리를 확인한 실습 모델입니다.',
+    stack: ['Python', 'PyTorch'],
+  },
+  {
+    id: 'screen-tracker',
+    period: '2026.08 · 일상의 불편 해결',
+    name: 'screen-tracker',
+    subtitle: 'Windows 활성 창 사용 기록 CLI 도구',
+    summary: '매일 컴퓨터 앞에서 어떤 프로그램에 시간을 쓰는지 직접 확인하려고 Python 표준 라이브러리만으로 만든 기록·분류 도구입니다.',
+    built: [
+      'ctypes로 Win32 API를 호출해 활성 창 정보를 주기적으로 기록하고, TOML 규칙으로 카테고리를 분류해 일간·주간 리포트를 출력했습니다.',
+      'argparse와 subprocess로 백그라운드 실행·종료를 지원했습니다.',
+    ],
+    verified: '단계별 완료 기준 5개 항목을 점검하고 폴링 완성본의 CLI 실행을 확인했습니다.',
+    limitation: '이벤트 훅 전환은 모듈 분리 중 순환 import 문제로 보류했습니다.',
+    stack: ['Python', 'ctypes', 'tomllib', 'csv'],
+  },
+];
+
+const selectedLearnings = [
+  learnings['karpathy-zero-to-hero'],
+  learnings['deep-learning-pytorch-textbook'],
+  learnings['tiny-python-projects'],
+];
+
+const aigenExperience = [
+  {
+    period: '2025.03 — 2025.12',
+    title: '이어드림스쿨 5기',
+    category: 'AI 인재 양성 과정 · 스타트업 연계 프로젝트 (문항 3)',
+    detail: '데이터 분석·머신러닝·딥러닝을 학습하고, 최종 단계인 스타트업 연계 한국어 문장 교정 라우팅 모델 프로젝트에서 4인 팀의 팀장을 맡았습니다.',
+    result: '스타트업 연계 프로젝트 장려상(3등)',
+  },
+  {
+    period: '2024.04 — 2024.07',
+    title: '포스코 청년 AI·Big Data 아카데미 26기',
+    category: 'AI · Big Data 집중 교육',
+    detail: 'Python, 데이터 분석, 컴퓨터 비전과 AIoT를 학습하고, 열화상 카메라 기반 신축 주택 하자 탐지 로봇 프로젝트에 참여했습니다.',
+    result: '최종 프로젝트 우수상',
+  },
+  {
+    period: '2024.01 — 2024.02',
+    title: '코드비전 인턴 (데이터분석팀)',
+    category: '컴퓨터 비전 데이터 1차 라벨링 · 가이드라인 개정 (문항 1)',
+    detail: '모호한 사내 가이드라인 때문에 작업자마다 객체 바운더리가 달라지던 상황에서, 맡은 할당량을 마친 뒤 관련 공기업의 공식 작업자 매뉴얼을 찾아 상급자께 제안하고 가이드라인 개정을 맡아 혼선을 줄였습니다.',
+    result: '사내 공식 가이드라인 반영 및 CTO 긍정 평가',
+  },
+];
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="유선종 — SK AIGEN 1기 지원 추가자료. 생각과 문제의식, 직접 부딪혀 확인한 도전 기록." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#F7F5F1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="유선종 — SK AIGEN 1기 도전 및 활동 기록" />
+    <meta property="og:description" content="인문·글쓰기 경험에서 출발해, 사람의 읽기와 쓰기를 돕는 AI 도구를 직접 시도하며 배운 기록입니다." />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:locale" content="ko_KR" />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>유선종 — SK AIGEN 1기 도전 기록</title>
+  </head>
+  <body style={theme} data-campaign="sk-aigen">
+    <a class="skip" href="#main">본문으로 건너뛰기</a>
+    <div class="site-shell">
+      <header class="topline">
+        <a href="#main" class="signature" aria-label="유선종 포트폴리오 처음으로">SJ<span aria-hidden="true">.</span></a>
+        <nav aria-label="주요 메뉴"><a href="#self-study">개인 도전</a><a href="#projects">팀 프로젝트</a><a href="#experience">이력</a><a href="#contact">연락</a></nav>
+        <a class="github-top" href={person.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </header>
+      <main id="main">
+        <section class="intro" aria-labelledby="name">
+          <div class="identity">
+            <div>
+              <p class="eyebrow">SK AIGEN 1기 · 기술/탐구 &amp; 창업/비즈니스</p>
+              <h1 id="name">{person.name}<span class="name-dot" aria-hidden="true">.</span></h1>
+              <p class="role">인문·글쓰기 경험에서 출발해, 사람의 표현을 돕는 AI를 탐구합니다</p>
+            </div>
+            <img class="portrait" src="/portrait-local.jpg" width="96" height="124" alt="유선종 프로필 사진" />
+          </div>
+          <div class="identity-strip"><span>Humanities &amp; Writing</span><span>Problem Discovery</span><span>AI Prototyping</span><a href={`mailto:${person.email}`}>{person.email} ↗</a></div>
+          <div class="editorial-intro">
+            <p class="section-kicker">01 / PERSPECTIVE</p>
+            <p class="statement">
+              <span>당연한 불편에 질문하고,</span>
+              <span>가능한 것부터 직접 만들어 확인합니다.</span>
+            </p>
+          </div>
+          <div class="intro-notes">
+            <div>
+              <h2>생각을 말로만 두지 않고 부딪혀 확인합니다.</h2>
+              <p>현장의 모호한 기준을 바로잡기 위해 공식 매뉴얼을 찾아 제안했던 인턴 경험부터, 강의 자막 파이프라인과 제안형 문서 편집기 프로토타입까지, 일상과 현장에서 만난 질문을 직접 실행으로 옮기며 배웠습니다.</p>
+            </div>
+            <div>
+              <h2>AIGEN에서 풀고 싶은 질문</h2>
+              <p>사람이 생각과 이야기를 글로 쓸 때, 알맞은 단어와 표현을 떠올리는 시간과 수고를 LLM이 어떻게 덜어줄 수 있을지 탐구합니다. 쉬운 징검다리부터 차근차근 검증하며 사람의 표현을 빛나게 하는 도구를 만들고 싶습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="self-study" class="section studies" aria-labelledby="studies-heading">
+          <div class="section-heading">
+            <p class="section-kicker">02 / PERSONAL CHALLENGES</p>
+            <h2 id="studies-heading">일상의 문제의식으로<br />직접 시도한 도전.</h2>
+            <span class="section-aside">2026<br />SELF-INITIATED</span>
+          </div>
+          <div class="studies-grid">
+            {aigenChallenges.map((study) => <article id={study.id} class="study">
+              <p class="study-meta"><span>{study.period}</span><span>{study.subtitle}</span></p>
+              <h3>{study.name}</h3>
+              <p class="study-summary">{study.summary}</p>
+              <div class="project-bottom"><p class="stack-list">{study.stack.join(' · ')}</p></div>
+              <details open><summary>시도한 과정과 배운 점 <span aria-hidden="true">+</span></summary><div class="project-details"><ul>{study.built.map((item) => <li>{item}</li>)}</ul><h4>확인한 것과 현재 단계</h4><p>{study.verified}</p><p class="limitation">{study.limitation}</p></div></details>
+            </article>)}
+          </div>
+        </section>
+
+        <section id="projects" class="section projects" aria-labelledby="projects-heading">
+          <div class="section-heading">
+            <p class="section-kicker">03 / TEAM PROJECTS</p>
+            <h2 id="projects-heading">동료와 함께 부딪히며<br />결과를 만든 경험.</h2>
+            <span class="section-aside">2024 — 2025<br />COLLABORATION</span>
+          </div>
+          {aigenProjects.map((project, index) => <article id={project.id} class="project">
+            <div class="project-index"><span>{String(index + 1).padStart(2, '0')}</span><span>{project.year}</span></div>
+            <div class="project-body">
+              <div class="project-title"><div><p class="project-subtitle">{project.subtitle}</p><h3>{project.name}</h3></div><div class="metric"><strong>{project.metric.value}</strong><span>{project.metric.label}</span></div></div>
+              <p class="project-summary">{project.summary}</p>
+              <p class="project-role">{project.role}</p>
+              <ol class="process" aria-label={`${project.name} 처리 흐름`}>{project.steps.map((step, i) => <li><span>{String(i + 1).padStart(2, '0')}</span>{step}</li>)}</ol>
+              <div class="project-bottom"><p class="stack-list">{project.stack.join(' · ')}</p>{project.repository && <a class="action-link" href={project.repository} target="_blank" rel="noopener noreferrer">GitHub에서 기록 보기 <span aria-hidden="true">↗</span></a>}</div>
+              <details><summary>구체적 역할과 배운 점 <span aria-hidden="true">+</span></summary><div class="project-details"><h4>제가 맡은 역할</h4><ul>{project.contribution.map((item) => <li>{item}</li>)}</ul><h4>결과와 성찰</h4><p>{project.outcome}</p><p class="limitation">{project.limitation}</p><h4>이 경험에서 배운 것</h4><p>{project.nextStep}</p></div></details>
+              <p class="award">{project.award}</p>
+            </div>
+          </article>)}
+        </section>
+
+        <section id="learning" class="section learning" aria-labelledby="learning-heading">
+          <div class="section-heading">
+            <p class="section-kicker">04 / FOUNDATION</p>
+            <h2 id="learning-heading">스스로 따라 치며<br />기초를 익힌 기록.</h2>
+            <span class="section-aside">SELF-TAUGHT<br />FOLLOW-ALONG</span>
+          </div>
+          <div class="learning-list">{selectedLearnings.map((item) => <article id={item.id} class="learning-card">
+            {item.cover
+              ? <img class="cover" src={item.cover} width="96" height="124" alt={`${item.title} 표지`} />
+              : <div class="cover cover-type" aria-hidden="true">{item.coverLines?.map((line) => <span>{line}</span>)}</div>}
+            <div class="learning-body">
+              <p class="study-meta"><span>{item.kind === 'book' ? 'BOOK' : 'COURSE'}</span><span>{item.progress}</span></p>
+              <h3>{item.title}</h3>
+              <p class="learning-author">{item.author}</p>
+              <a class="action-link" href={item.repository} target="_blank" rel="noopener noreferrer">학습 코드 보기 <span aria-hidden="true">↗</span></a>
+              <details><summary>배운 점 <span aria-hidden="true">+</span></summary><div class="project-details"><ul>{item.takeaways.map((line) => <li>{line}</li>)}</ul></div></details>
+            </div>
+          </article>)}</div>
+        </section>
+
+        <section id="experience" class="section" aria-labelledby="experience-heading">
+          <div class="section-heading">
+            <p class="section-kicker">05 / TIMELINE &amp; BACKGROUND</p>
+            <h2 id="experience-heading">질문하고 배우며<br />걸어온 과정.</h2>
+          </div>
+          <div class="experience-list">{aigenExperience.map((item) => <article class="experience-row"><p class="period">{item.period}</p><div><p class="experience-category">{item.category}</p><h3>{item.title}</h3><p>{item.detail}</p>{item.result && <p class="experience-result">{item.result}</p>}</div></article>)}</div>
+          <p class="education">{person.education}<span>책과 글쓰기에서 출발한 언어에 대한 관심을 AI 기반 문제 해결로 이어가고 있습니다.</span></p>
+        </section>
+
+        <section id="contact" class="section contact" aria-labelledby="contact-heading">
+          <p class="section-kicker">06 / CONTACT</p>
+          <div>
+            <h2 id="contact-heading">AIGEN에서 동료들과<br />함께 부딪히며 성장하겠습니다.</h2>
+            <a class="contact-email" href={`mailto:${person.email}`}>{person.email} ↗</a>
+            <a class="action-link" href={person.github} target="_blank" rel="noopener noreferrer">GitHub · tryfasting ↗</a>
+          </div>
+        </section>
+      </main>
+      <footer><span>© {new Date().getFullYear()} {person.name}</span><span>SK AIGEN 1기 · PORTFOLIO</span><a href="https://github.com/michael-andreuzza/swissfolio" target="_blank" rel="noopener noreferrer">Design reference · Swissfolio</a></footer>
+    </div>
+  </body>
+</html>
