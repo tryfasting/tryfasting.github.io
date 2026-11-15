@@ -46,7 +46,7 @@ export const portfolioThemes = {
   skAigen: {
     label: 'SK AIGEN Orange & Red',
     accent: '#F37321',
-    accentInk: '#9C3A00',
+    accentInk: '#C23B00',
     accentSoft: '#FBE9DC',
     marker: 'linear-gradient(90deg, #EA002C 0 45%, #F37321 45% 100%)',
   },
